@@ -9,7 +9,7 @@ FactoryGirl.define do
     end
 
     factory :player_with_fide_id do
-      fide_id '111333111'
+      fide_id 111333111
     end	
   end  
 end

@@ -56,10 +56,10 @@ describe Player do
 
     it 'should look for a player in FIDE database and assign fide_id to player' do 
       player = FactoryGirl.create(:player, name: "Jolanta", surname: "Zawadzka")
-      player.fide_id.should eql "1122320"
+      player.fide_id.should eql 1122320
       
       player = FactoryGirl.create(:player, name: "Beata", surname: "Kądziołka")
-      player.fide_id.should eql "1119990"
+      player.fide_id.should eql 1119990
     end
 
   end

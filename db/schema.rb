@@ -11,13 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131018061906) do
+ActiveRecord::Schema.define(version: 20131019093026) do
+
+  create_table "fide_ratings", force: true do |t|
+    t.integer "rating"
+    t.integer "fide_id"
+    t.integer "year"
+    t.integer "month"
+  end
 
   create_table "players", force: true do |t|
     t.string   "name"
     t.string   "middlename"
     t.string   "surname"
-    t.string   "fide_id"
+    t.integer  "fide_id"
     t.date     "date_of_birth"
     t.integer  "site_user_id"
     t.integer  "player_photo_id"
