@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 
@@ -61,6 +62,23 @@ describe Player do
       player = FactoryGirl.create(:player, name: "Beata", surname: "Kądziołka")
       player.fide_id.should eql 1119990
     end
-
   end
+
+  context 'fide rating' do
+    it 'should not have any fide rating initialy' do
+      player = FactoryGirl.create(:player)
+      player.fide_ratings.should be_empty
+    end
+
+    it 'should have a fid rating when we create one' do
+      player = FactoryGirl.create(:player, name: "Jolanta", surname: "Zawadzka")
+      player.fide_ratings.should be_empty
+      player.fide_id.should eql 1122320
+      fide_rating = FactoryGirl.create(:fide_rating, fide_id: player.fide_id)
+      player.fide_ratings.should_not be_empty
+      player.fide_ratings.first.should eql fide_rating
+      fide_rating.player.should eql player
+    end
+  end
+
 end 

@@ -6,7 +6,10 @@ source 'https://bb-m.rubygems.org/'
 gem 'rails', '4.0.0'
 gem 'mysql2'
 gem 'sass-rails', '~> 4.0.0'
+gem 'zip-zip'
+gem 'nokogiri'
 
+gem 'magic_encoding'
 gem 'rspec-rails', :group => [:development, :test]
 gem 'factory_girl_rails', :group => [:development, :test]
 gem 'debugger', :group => [:development, :test]

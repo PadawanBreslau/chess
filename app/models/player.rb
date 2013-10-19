@@ -1,6 +1,6 @@
+# -*- encoding : utf-8 -*-
 class Player < ActiveRecord::Base
 
-  attr_accessor :name, :surname, :middlename, :fide_id
   NAME_REGEX = /\A[\s[:alpha:]-]*\z/u
   FIDE_FILE_PATH = "public/standard_oct13frl.txt"
 
@@ -9,6 +9,8 @@ class Player < ActiveRecord::Base
   validates :surname, presence: true, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}
 
   before_save :set_fide_id, if: proc {|player| player.fide_id.nil?}
+
+  has_many :fide_ratings, foreign_key: :fide_id, primary_key: :fide_id
 
 
 private
