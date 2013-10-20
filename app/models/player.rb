@@ -4,9 +4,10 @@ class Player < ActiveRecord::Base
   NAME_REGEX = /\A[\s[:alpha:]-]*\z/u
   FIDE_FILE_PATH = "public/standard_oct13frl.txt"
 
-  validates :name, presence: true, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}
+  validates :name, presence: true, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}, uniqueness: {scope: :surname}
   validates :middlename, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}, allow_nil: true
   validates :surname, presence: true, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}
+  validates :fide_id, uniqueness: true
 
   before_save :set_fide_id, if: proc {|player| player.fide_id.nil?}
 

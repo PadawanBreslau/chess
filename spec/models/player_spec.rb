@@ -41,6 +41,13 @@ describe Player do
       FactoryGirl.build(:player, middlename: nil).should be_valid
     end
 
+    it 'should not allow two players with same name and surname or same fide_id' do
+      FactoryGirl.create(:player, fide_id:1111111)
+      expect{FactoryGirl.create(:player)}.to raise_error
+      expect{FactoryGirl.create(:player, name: "Arnold", fide_id: 1111111)}.to raise_error
+      expect{FactoryGirl.create(:player, name: "Arnold", fide_id: 1112223)}.not_to raise_error
+    end
+
     it 'should not allow any chars besides from letters and hyphens and spaces' do
       FactoryGirl.build(:player, name: 'a12345').should_not be_valid
       FactoryGirl.build(:player, name: 'abcdef').should be_valid

@@ -15,6 +15,11 @@ describe FideRating do
        FactoryGirl.build(:fide_rating, fide_id: "XXX").should_not be_valid
      end
 
+     it 'should not create two rating for one user and the same time period' do
+       FactoryGirl.create(:fide_rating)
+       expect{FactoryGirl.create(:fide_rating)}.to raise_error
+     end
+
   end
 
   context 'Downloading new rating list' do

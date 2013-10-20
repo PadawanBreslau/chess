@@ -5,7 +5,7 @@ require 'zip/zip'
 
 class FideRating < ActiveRecord::Base
 
-  validates :fide_id, numericality: true, presence: true
+  validates :fide_id, numericality: true, presence: true, uniqueness: {scope: [:year, :month]}
   validates :year, numericality: true, presence: true, inclusion: 1950..Time.now.year
   validates :month, numericality: true, presence: true,  inclusion: 1..12
   validates :rating, numericality: true, presence: true, inclusion: 1000..3500
@@ -13,7 +13,7 @@ class FideRating < ActiveRecord::Base
   belongs_to :player, primary_key: :fide_id, foreign_key: :fide_id
 
 def self.download_and_parse_rating(year=Time.now.year, month=Time.now.month)
-  raise ArgumentError.new("Invalid input parameter") if !year.kind_of?(Fixnum) || month.kind_of?(Fixnum) || !(1..12).include?(month)
+  raise ArgumentError.new("Invalid input parameter") if !year.kind_of?(Fixnum) || !month.kind_of?(Fixnum) || !(1..12).include?(month)
   year = year % 100
   zip_file_path = "public/assets/rating_lists/rating_list_#{year}_#{month}_#{Time.now.strftime("%d%m%y")}.zip"
 
