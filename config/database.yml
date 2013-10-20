@@ -24,6 +24,6 @@ production:
   database: chess
   pool: 5
   timeout: 5000
-  git stencoding: utf8
+  encoding: utf8
   username: root
   password:

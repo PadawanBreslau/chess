@@ -20,6 +20,7 @@ private
     File.open("#{Rails.root}/#{FIDE_FILE_PATH}").each_line do |line|
       @fide_id = extract_id_from_line(line) if line.match(name.parameterize.camelcase) && line.match(surname.parameterize.camelcase)
     end
+    ST_LOG.info("Player found with fide_id: #{@fide_id}") if @fide_id
     self.fide_id = @fide_id
   end
 
