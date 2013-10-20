@@ -11,6 +11,13 @@ FactoryGirl.define do
 
     factory :player_with_fide_id do
       fide_id 111333111
-    end	
+    end
+
+    factory :player_with_photo do
+      photo_file_name 'photo.png'
+      photo_content_type 'image/png'
+      photo_file_size 1024
+    end
+
   end  
 end

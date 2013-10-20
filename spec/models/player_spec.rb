@@ -69,6 +69,11 @@ describe Player do
       player = FactoryGirl.create(:player, name: "Beata", surname: "Kądziołka")
       player.fide_id.should eql 1119990
     end
+
+    it 'should create player with photo attachment' do
+      (player = FactoryGirl.create(:player_with_photo)).should be_valid
+      player.photo.should_not be_nil
+    end
   end
 
   context 'fide rating' do

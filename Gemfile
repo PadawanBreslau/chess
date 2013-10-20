@@ -13,7 +13,7 @@ gem 'magic_encoding'
 gem 'rspec-rails', :group => [:development, :test]
 gem 'factory_girl_rails', :group => [:development, :test]
 gem 'debugger', :group => [:development, :test]
-
+gem "paperclip", "~> 3.0"
 
 
 # Use Uglifier as compressor for JavaScript assets
