@@ -9,6 +9,8 @@ validates :result, presence: true, inclusion: (1..RESULTS.length)
 has_one :white_player, class_name: "Player", primary_key: :white_player_id,  foreign_key: :id
 has_one :black_player, class_name: "Player", primary_key: :black_player_id,  foreign_key: :id
 
+belongs_to :round
+
 
 def chess_result
 	RESULTS[self.result] || "?"

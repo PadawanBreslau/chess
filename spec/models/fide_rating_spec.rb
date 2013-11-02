@@ -33,10 +33,12 @@ describe FideRating do
     end
 
     it 'should download and parse new rating list' do
+      pending("Take too long.")
       FideRating.download_and_parse_rating(2012,12).should eql true
     end
 
     it 'should download and parse new rating list and add fide ratings' do
+      pending("Take too long.")
       player = FactoryGirl.create(:player, name: "Jolanta", surname: "Zawadzka")
       player2 = FactoryGirl.create(:player, name: "Beata", surname: "Kądziołka")
       FideRating.download_and_parse_rating(2012,12).should eql true
