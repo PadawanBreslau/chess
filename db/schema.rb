@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131022200243) do
+ActiveRecord::Schema.define(version: 20131102203652) do
 
   create_table "fide_ratings", force: true do |t|
     t.integer "rating"
@@ -49,6 +49,21 @@ ActiveRecord::Schema.define(version: 20131022200243) do
 
   create_table "rounds", force: true do |t|
     t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "tournament_id"
+    t.integer  "round_number"
+  end
+
+  create_table "tournaments", force: true do |t|
+    t.string   "tournament_name"
+    t.datetime "tournament_start"
+    t.datetime "tournament_finish"
+    t.integer  "round_number"
+    t.boolean  "is_finished"
+    t.string   "place"
+    t.string   "url"
+    t.string   "external_transmition_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
