@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102203652) do
+ActiveRecord::Schema.define(version: 20131102215424) do
+
+  create_table "events", force: true do |t|
+    t.string   "event_name"
+    t.string   "url"
+    t.datetime "event_start"
+    t.datetime "event_finish"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fide_ratings", force: true do |t|
     t.integer "rating"
@@ -66,6 +75,7 @@ ActiveRecord::Schema.define(version: 20131102203652) do
     t.string   "external_transmition_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "event_id"
   end
 
 end

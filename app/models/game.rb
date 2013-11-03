@@ -11,7 +11,6 @@ has_one :black_player, class_name: "Player", primary_key: :black_player_id,  for
 
 belongs_to :round
 
-
 def chess_result
 	RESULTS[self.result] || "?"
 end

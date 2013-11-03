@@ -5,6 +5,7 @@ URL_REGEX = /((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-
 
 has_many :rounds
 has_many :games, through: :rounds
+belongs_to :event
 
 validates :tournament_name, presence: true, length: {minimum: 2, maximum: 128}, uniqueness: true
 validates :round_number, numericality: true, inclusion: (1..999), allow_nil: true
