@@ -8,6 +8,8 @@ gem 'mysql2'
 gem 'sass-rails', '~> 4.0.0'
 gem 'zip-zip'
 gem 'nokogiri'
+gem 'devise'
+
 
 gem 'magic_encoding'
 gem 'rspec-rails', :group => [:development, :test]
