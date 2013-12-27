@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131103190208) do
+ActiveRecord::Schema.define(version: 20131227162531) do
 
   create_table "events", force: true do |t|
     t.string   "event_name"
@@ -64,19 +64,33 @@ ActiveRecord::Schema.define(version: 20131103190208) do
     t.integer  "round_number"
   end
 
+  create_table "site_user_informations", force: true do |t|
+    t.integer  "site_user_id"
+    t.string   "name"
+    t.string   "surname"
+    t.string   "nick"
+    t.date     "date_of_birth"
+    t.float    "reputation",     default: 0.0
+    t.string   "country"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "last_active_at"
+  end
+
   create_table "site_users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                    default: "", null: false
+    t.string   "encrypted_password",       default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",            default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "site_user_information_id"
   end
 
   add_index "site_users", ["email"], name: "index_site_users_on_email", unique: true, using: :btree
