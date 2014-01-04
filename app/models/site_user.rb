@@ -3,4 +3,5 @@ class SiteUser < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :site_user_information
+  has_many :articles
 end
