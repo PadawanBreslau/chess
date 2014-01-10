@@ -19,7 +19,8 @@ after_save :create_rounds
 
 
 def players
-  self.white_players.concat(self.black_players)
+  return [] if rounds.empty?
+  rounds.first.players
 end
 
 
@@ -29,7 +30,7 @@ private
     return false if rounds.present?
     if round_number
       round_number.times do |i|
-        if (tournament_finish - tournament_start) == round_number-1
+        if (tournament_finish.to_date - tournament_start.to_date) == round_number-1
           rounds << Round.create!(round_number: i+1, date: tournament_start + i.days)
         else
           rounds << Round.create!(round_number: i+1, date: tournament_start)

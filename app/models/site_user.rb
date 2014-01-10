@@ -4,4 +4,5 @@ class SiteUser < ActiveRecord::Base
 
   belongs_to :site_user_information
   has_many :articles
+  has_many :blog_entries
 end

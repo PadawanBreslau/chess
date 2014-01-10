@@ -8,7 +8,10 @@ describe ArticlePhoto do
       expect{FactoryGirl.create(:article_photo, photo_file_name: nil)}.to raise_error
       expect{FactoryGirl.create(:article_photo, photo_content_type: 'image/gif')}.to raise_error
       expect{FactoryGirl.create(:article_photo, photo_file_size: -1)}.to raise_error
+    end
 
+    it 'should not create article photo without article' do
+      expect{FactoryGirl.create(:article_photo, article: nil)}.to raise_error
     end
   end
 end

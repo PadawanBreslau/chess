@@ -27,9 +27,20 @@ describe Tournament do
     it 'should not create tournament with start date after finish date' do
       FactoryGirl.build(:tournament, tournament_start: Date.today, tournament_finish: Date.today - 1.day).should_not be_valid
     end
+
+    it 'should have no players if there is no rounds' do
+      @t1 = FactoryGirl.build(:tournament)
+      @t1.players.should be_empty
+    end
   end
 
   context 'creating rounds after creating or updating tournaments' do
+
+    it 'should create tournament with proper dates' do
+      expect{@t1 = FactoryGirl.create(:tournament, tournament_start: Date.today, tournament_finish: Date.today + 8.days, round_number: 9)}.not_to raise_error
+      @t1.rounds.first.date.should == Date.today
+      @t1.rounds.last.date.should == Date.today + 8.day
+    end
 
     it 'should never create round when rounds are already created' do
       rounds = [FactoryGirl.create(:round)]

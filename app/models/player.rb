@@ -5,7 +5,8 @@ class Player < ActiveRecord::Base
   FIDE_FILE_PATH = "public/standard_oct13frl.txt"
 
   #attr_accessible :photo
-  has_attached_file :photo, :styles => { :medium => "400x400>", :thumb => "80x80>" }, :default_url => "/images/:style/example_player.png"
+  has_attached_file :photo, :styles => { :medium => "400x400>", :thumb => "80x80>" }, :default_url => "/images/:style/example_player.png",                   :url  => "/assets/photos/:id/:style/:basename.:extension",
+                  :path => ":rails_root/public/assets/player_photos/:id/:style/:basename.:extension"
   before_save :set_fide_id, if: proc {|player| player.fide_id.nil?}
 
   has_many :fide_ratings, foreign_key: :fide_id, primary_key: :fide_id
