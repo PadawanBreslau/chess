@@ -101,4 +101,49 @@ describe Article do
       @article.site_comments.last.should eql comment
     end
   end
+
+  context 'tags' do
+    before do
+      @article = FactoryGirl.create(:article)
+    end
+
+    it 'should be able to add tags to article' do
+      @article.tag_list.should be_blank
+      @article.tag_list.add("chess", "game")
+      @article.tag_list.should_not be_blank
+      @article.tag_list.should eql ["chess", "game"]
+      @article.save
+      @article.reload
+      @article.tags.size.should eql 2
+    end
+
+    it 'should be able to remove tags' do
+      @article.tag_list.add("chess", "game")
+      @article.tag_list.should eql ["chess", "game"]
+      @article.tag_list.remove("chess", "game")
+      @article.save
+      @article.reload
+      @article.tags.size.should eql 0
+    end
+
+    it 'should find articles with specified tags' do
+      @article.tag_list.add("chesstag", "game")
+      @article.save
+      @article.reload
+      Article.tagged_with("chesstag").size.should eql 1
+      Article.tagged_with(["chesstag", "game"]).size.should eql 1
+      Article.tagged_with(["chesstag", "chessgame"]).size.should eql 0
+    end
+
+    it 'should find related articles' do
+      @article2 = FactoryGirl.create(:article)
+      @article.tag_list.add("chess", "game")
+      @article2.tag_list.add("chess", "chesssgame")
+      @article.save
+      @article2.save
+      @article.reload
+      @article2.reload
+      @article.find_related_tags.to_a.first.should eql @article2
+    end
+  end
 end

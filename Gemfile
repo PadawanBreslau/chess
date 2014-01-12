@@ -10,13 +10,13 @@ gem 'zip-zip'
 gem 'nokogiri'
 gem 'devise'
 
-
+gem 'acts-as-taggable-on'
 gem 'magic_encoding'
 gem 'rspec-rails', :group => [:development, :test]
 gem 'factory_girl_rails', :group => [:development, :test]
 gem 'debugger', :group => [:development, :test]
 gem "paperclip", "~> 3.0"
-
+gem 'simplecov', :require => false, :group => :test
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
