@@ -1,17 +1,16 @@
 # encoding: UTF-8
-
 require 'spec_helper'
 
 describe TournamentsController do
 
   context 'GET #show' do
-    it "populates a tournament" do
+    it 'populates a tournament' do
       tournament = FactoryGirl.create(:tournament)
       get :show, id: tournament
       assigns(:tournament).should eql tournament
     end
 
-    it "renders the :show view" do
+    it 'renders the :show view' do
       tournament = FactoryGirl.create(:tournament)
       get :show, id: tournament
       response.should render_template :show
@@ -19,14 +18,14 @@ describe TournamentsController do
   end
 
   context 'GET :index' do
-    it "populates a tournament" do
+    it 'populates a tournament' do
       tournament = FactoryGirl.create(:tournament)
       get :index
       assigns(:tournaments).to_a.should eql [tournament]
     end
 
-    it "renders the :show view" do
-      tournament = FactoryGirl.create(:tournament)
+    it 'renders the :index view' do
+      FactoryGirl.create(:tournament)
       get :index
       response.should render_template :index
     end
@@ -37,9 +36,9 @@ describe TournamentsController do
       @tournament = FactoryGirl.build(:tournament)
     end
 
-    it "creates a new tournament" do
+    it 'creates a new tournament' do
       expect{
-        post :create, tournament: @tournament.attributes.symbolize_keys
+          post :create, tournament: @tournament.attributes.symbolize_keys
         }.to change(Tournament,:count).from(0).to(1)
     end
   end
@@ -49,12 +48,12 @@ describe TournamentsController do
       @tournament = FactoryGirl.create(:tournament)
     end
 
-    it "updates a tournament" do
+    it 'updates a tournament' do
       expect{
-        put :update, id: @tournament, tournament: {tournament_name: "New tournament name"}
+        put :update, id: @tournament, tournament: {tournament_name: 'New tournament name'}
         }.not_to change(Tournament,:count).by(1)
       @tournament.reload
-      @tournament.tournament_name.should eql "New tournament name"
+      @tournament.tournament_name.should eql 'New tournament name'
     end
   end
 
@@ -63,7 +62,7 @@ describe TournamentsController do
       @tournament = FactoryGirl.create(:tournament)
     end
 
-    it "destroy a tournament" do
+    it 'destroy a tournament' do
       expect{
         delete :destroy, id: @tournament
       }.to change(Tournament,:count).from(1).to(0)
