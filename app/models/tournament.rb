@@ -13,7 +13,8 @@ validates :place, format: { with: NAME_REGEX }, allow_nil: true
 validates :url, format: { with: URL_REGEX }, allow_nil: true
 validates :external_transmition_url, format: { with: URL_REGEX }, allow_nil: true
 
-validate :check_if_start_is_before_finish
+validate :check_if_start_is_before_finish,
+  :if => Proc.new {|t| t.tournament_start.present? && t.tournament_finish.present?}
 
 after_save :create_rounds
 
