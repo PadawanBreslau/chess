@@ -2,7 +2,7 @@
 FactoryGirl.define do
   factory  :player do
     name "Alan"
-    surname "Beowulf"
+    surname Array.new(8){[ *'a'..'z'].sample}.join
     middlename "Culkin"
 
     factory :player_with_date_of_birth do
@@ -10,7 +10,7 @@ FactoryGirl.define do
     end
 
     factory :player_with_fide_id do
-      fide_id 111333111
+      fide_id SecureRandom.random_number(999999999)
     end
 
     factory :player_with_photo do

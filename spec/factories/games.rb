@@ -23,5 +23,10 @@ FactoryGirl.define do
       association :white_player, factory: :player, surname: Array.new(8){[ *'a'..'z'].sample}.join, fide_id: Random.rand(10000000), strategy: :build
       association :black_player, factory: :player, surname: Array.new(8){[ *'a'..'z'].sample}.join, fide_id: Random.rand(10000000), strategy: :build
     end
+
+    factory :game_with_created_random_players do
+      association :white_player, factory: :player_with_fide_id, surname: Array.new(8){[ *'a'..'z'].sample}.join, fide_id: Random.rand(10000000)
+      association :black_player, factory: :player_with_fide_id, surname: Array.new(8){[ *'a'..'z'].sample}.join, fide_id: Random.rand(99999999)
+    end
   end
 end

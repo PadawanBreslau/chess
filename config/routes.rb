@@ -28,6 +28,7 @@ Chess::Application.routes.draw do
   resources :events, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :tournaments, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :rounds, :only => ["show","create", "new", "index", "update", "edit", "destroy"]
+  resources :games, :only => ["show","create", "new", "index", "update", "edit", "destroy"]
   resources :articles, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :site_comments, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :rates, :only => ["edit"]
