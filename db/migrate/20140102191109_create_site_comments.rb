@@ -5,6 +5,7 @@ class CreateSiteComments < ActiveRecord::Migration
       t.string :content, :null => false
       t.integer :commentable_id
       t.string :commentable_type
+
       t.timestamps
     end
   end

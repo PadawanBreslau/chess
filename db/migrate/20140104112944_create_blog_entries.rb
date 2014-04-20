@@ -4,6 +4,8 @@ class CreateBlogEntries < ActiveRecord::Migration
       t.integer :site_user_id
       t.string :title
       t.text :content
+
+      t.timestamps
     end
   end
 end

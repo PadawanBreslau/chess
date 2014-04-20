@@ -1,0 +1,6 @@
+%div.site_info_list
+- if @blog_entries.present?
+  = render 'list'
+  = paginate @blog_entries
+- else
+  %p= t('site_info.empty_list')

@@ -19,7 +19,10 @@ class Player < ActiveRecord::Base
   validates :photo, presence: false, attachment_content_type: { content_type: ["image/jpg","image/png"]}, attachment_size: { in: 0..3.megabytes }
 
 
-
+def to_title
+  #TODO
+  "FAKE NAME"
+end
 
 private
 

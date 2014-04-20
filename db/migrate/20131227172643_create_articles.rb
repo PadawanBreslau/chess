@@ -6,6 +6,7 @@ class CreateArticles < ActiveRecord::Migration
       t.string :lead
       t.string :summary
       t.text :content
+
       t.timestamps
     end
   end

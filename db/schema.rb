@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140110192526) do
+ActiveRecord::Schema.define(version: 20140112202350) do
 
   create_table "article_photos", force: true do |t|
     t.integer  "article_id"
@@ -34,9 +34,11 @@ ActiveRecord::Schema.define(version: 20140110192526) do
   end
 
   create_table "blog_entries", force: true do |t|
-    t.integer "site_user_id"
-    t.string  "title"
-    t.text    "content"
+    t.integer  "site_user_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "blog_entry_photos", force: true do |t|
@@ -92,6 +94,14 @@ ActiveRecord::Schema.define(version: 20140110192526) do
     t.datetime "photo_updated_at"
   end
 
+  create_table "rates", force: true do |t|
+    t.integer "likes",         default: 0,   null: false
+    t.integer "dislikes",      default: 0,   null: false
+    t.float   "general_rate",  default: 0.0, null: false
+    t.integer "rateable_id"
+    t.string  "rateable_type"
+  end
+
   create_table "rounds", force: true do |t|
     t.datetime "date"
     t.datetime "created_at"
@@ -140,6 +150,12 @@ ActiveRecord::Schema.define(version: 20140110192526) do
 
   add_index "site_users", ["email"], name: "index_site_users_on_email", unique: true, using: :btree
   add_index "site_users", ["reset_password_token"], name: "index_site_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "site_users_rates", force: true do |t|
+    t.integer "site_user_id", null: false
+    t.integer "rate_id",      null: false
+    t.string  "rate_action"
+  end
 
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"

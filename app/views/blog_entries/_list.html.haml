@@ -1,0 +1,13 @@
+-content_for :head do
+  =javascript_include_tag 'jquery.imagePopup'
+
+- @blog_entries.each do |blog_entry|
+  %div.blog_entry_title
+    = blog_entry.title
+    %span.blog_entry_date
+      = blog_entry.created_at.strftime('%d-%m-%Y/%H:%M')
+    = link_to blog_entry.site_user.user_information.nil? ? "(#{blog_entry.site_user.email})" : "(#{blog_entry.site_user.user_information.nick})", blog_entry.site_user
+  %div.blog_entry_teaser
+    = blog_entry.summary.blank? ? blog_entry.content.split(' ')[0,100].join(' ') + '...' : blog_entry.summary
+    = link_to t('blog_entry.read_more'), blog_entry_path(blog_entry)
+    = "(#{pluralize(blog_entry.site_comments.size, t('site_comment.blog_entry'))})"

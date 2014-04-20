@@ -1,11 +1,42 @@
 # -*- encoding : utf-8 -*-
 Chess::Application.routes.draw do
+  get "players/show"
+  get "players/index"
+  get "players/new"
+  get "players/create"
+  get "players/edit"
+  get "players/update"
+  get "players/destroy"
+  get "site_user_informations/show"
+  get "site_user_informations/edit"
+  get "site_user_informations/update"
+  get "site_user_informations/destroy"
   devise_for :site_users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root to: 'blog_entries#index'
+
+  resources :blog_entries, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :site_users, :except => ["show"]
+  resources :site_user_informations, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :players, :only => ["index","show","update","create","destroy", "new", "edit"]
+  #resources :photos, :only => ["index","show","update","create","destroy", "new", "edit"]
+  #resources :photoalbums, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :player_photos, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :events, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :tournaments, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :rounds, :only => ["show","create", "new"]
+  resources :articles, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :site_comments, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :rates, :only => ["edit"]
+  #resources :results, :only => ["edit", "destroy"]
+  #resources :feeds, :only => ["index","update","create","destroy", "new", "edit"]
+  #resources :tags, :only => ["show"]
+  #resources :games, :only => ["show"]
+  #resources :observations, :only => ["index", "destroy"]
+  #resources :favorites, :only => ["index", "destroy"]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -41,7 +72,7 @@ Chess::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

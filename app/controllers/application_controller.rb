@@ -5,10 +5,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :record_user_activity
 
+  def current_user
+    current_site_user
+  end
+
   private
 
   def record_user_activity
-    if current_user && current_user.site_uder_information
+    if current_user && current_user.site_user_information
       current_user.site_uder_information.touch :last_active_at
     end
   end

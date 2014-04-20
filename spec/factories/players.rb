@@ -4,7 +4,7 @@ FactoryGirl.define do
     name "Alan"
     surname "Beowulf"
     middlename "Culkin"
-      
+
     factory :player_with_date_of_birth do
       date_of_birth { Date.today - 25.years }
     end
@@ -19,5 +19,5 @@ FactoryGirl.define do
       photo_file_size 1024
     end
 
-  end  
+  end
 end

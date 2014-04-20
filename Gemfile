@@ -9,6 +9,8 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'zip-zip'
 gem 'nokogiri'
 gem 'devise'
+gem 'kaminari'
+gem 'inherited_resources'
 
 gem 'acts-as-taggable-on'
 gem 'magic_encoding'
@@ -17,6 +19,10 @@ gem 'factory_girl_rails', :group => [:development, :test]
 gem 'debugger', :group => [:development, :test]
 gem "paperclip", "~> 3.0"
 gem 'simplecov', :require => false, :group => :test
+
+gem 'haml'
+gem 'sass'
+gem 'simple-navigation'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
