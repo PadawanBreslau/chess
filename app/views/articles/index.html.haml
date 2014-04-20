@@ -1,0 +1,6 @@
+%div.article_list
+- if @articles.present?
+  = render 'list'
+  = paginate @articles
+- else
+  %p= t('site_info.empty_list')
