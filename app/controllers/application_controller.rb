@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def record_user_activity
     if current_user && current_user.site_user_information
-      current_user.site_uder_information.touch :last_active_at
+      current_user.site_user_information.touch :last_active_at
     end
   end
 end

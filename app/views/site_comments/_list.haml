@@ -1,0 +1,6 @@
+- comments.each do |comment|
+  %div.comment
+    %div.comment_info
+      = "#{short_updated_at(comment)} #{comment.site_user.nickname}"
+    %div.comment_content
+      = comment.content

@@ -16,3 +16,6 @@
     = @article.lead if @article.lead
   %div.content
     = @article.content
+  %div.comments
+    = render partial: "site_comments/form", locals: {commentable_type: "Article", commentable_id: @article.id}
+    = render partial: "site_comments/list", locals: {comments: @article.site_comments}

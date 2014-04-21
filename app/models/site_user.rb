@@ -13,7 +13,13 @@ class SiteUser < ActiveRecord::Base
   delegate :reputation, to: :site_user_information
   delegate :reputation=, to: :site_user_information
 
+  delegate :nick, to: :site_user_information
+
   after_create :create_site_user_information
+
+  def nickname
+    nick || email
+  end
 
   private
 

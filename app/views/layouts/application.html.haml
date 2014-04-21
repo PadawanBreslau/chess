@@ -21,7 +21,7 @@
     #main_window
       #user_login
         - if site_user_signed_in?
-          = link_to (current_user.nick || current_user.email), user_information_path(current_user.user_information)
+          = link_to (current_user.nick || current_user.email), site_user_information_path(current_user.site_user_information)
           \#{link_to "Sign out", destroy_site_user_session_path, :method => :delete}
         - else
           = link_to "Sign up", new_site_user_registration_path

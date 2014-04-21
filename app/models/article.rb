@@ -6,7 +6,7 @@ paginates_per 5
 belongs_to :site_user
 belongs_to :commentable
 has_many :article_photos
-has_many :site_comments, as: :commentable
+has_many :site_comments, as: :commentable, dependent: :destroy
 has_one :rate, as: :rateable, dependent: :destroy
 
 validates :title, presence: true, length: {minimum: 4, maximum: 128}

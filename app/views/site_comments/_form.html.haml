@@ -1,0 +1,6 @@
+= simple_form_for SiteComment.new, url: site_comments_path do |f|
+  = f.input :content, :label => false, input_html: { class: 'add_comment' }
+  =f.hidden_field :commentable_type, :value => commentable_type
+  =f.hidden_field :commentable_id, :value => commentable_id
+  =f.hidden_field :site_user_id, :value => current_user.id
+  - f.submit

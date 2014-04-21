@@ -11,6 +11,7 @@ gem 'nokogiri'
 gem 'devise'
 gem 'kaminari'
 gem 'inherited_resources'
+gem 'simple_form'
 
 gem 'acts-as-taggable-on'
 gem 'magic_encoding'
@@ -23,6 +24,11 @@ gem 'simplecov', :require => false, :group => :test
 gem 'haml'
 gem 'sass'
 gem 'simple-navigation'
+
+#Aothorization
+gem 'the_role', '~> 2.5.2'
+gem 'the_role_bootstrap3_ui'
+
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
