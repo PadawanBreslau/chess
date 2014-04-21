@@ -7,8 +7,9 @@ SimpleNavigation::Configuration.run do |navigation|
 
     #end
 
-    primary.item :key_info, t('site_infos'), articles_path do |site_info|
-      site_info.item :key_photoalbum, t('photoalbums'), blog_entries_path
+    primary.item :key_info, t('news'), blog_entries_path do |site_info|
+      site_info.item :key_photoalbum, t('blog.blog'), blog_entries_path
+      site_info.item :key_photoalbum, t('article.articles'), articles_path
     end
 
     primary.item :key_2, 'Players',  players_path do |players|

@@ -1,0 +1,18 @@
+-content_for :head do
+  =javascript_include_tag 'jquery.imagePopup'
+
+%div
+  %div.tags
+    - @article.tags.each do |tag|
+      %div.tag
+        = link_to tag, tag_path(tag)
+  %div.article_title
+    %b= @article.title
+    = link_to t('edit'), edit_article_path(@article)# if can? :edit, @article
+    = link_to t('delete'), article_path(@article), :method => :delete# if can? :delete, @article
+  %div.article_author
+    = link_to(@article.author, @article.site_user) + " #{to_created_at(@article)}"
+  %div.lead
+    = @article.lead if @article.lead
+  %div.content
+    = @article.content

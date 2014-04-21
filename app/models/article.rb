@@ -16,6 +16,10 @@ validates :content, presence: true, length: {minimum: 16, maximum: 2**15}
 
 after_create :create_rating
 
+  #MOVE TO a module?
+  def author
+  end
+
 private
 
   def create_rating

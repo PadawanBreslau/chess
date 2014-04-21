@@ -10,4 +10,4 @@
   %div.article_teaser
     = article.summary.blank? ? article.content.split(' ')[0,100].join(' ') + '...' : article.summary
     = link_to t('article.read_more'), article_path(article)
-    = "(#{pluralize(article.site_comments.size, t('site_comment.article'))})"
+    = "(#{pluralize(article.site_comments.size, t('site_comment.comments'))})"
