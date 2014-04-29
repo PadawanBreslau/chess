@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  #load_and_authorize_resource
+  load_and_authorize_resource param_method: :article_params
 
   def index
     @articles = Article.page(params[:page])
@@ -25,6 +25,7 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
+    authorize! :edit, @article
   end
 
   def update

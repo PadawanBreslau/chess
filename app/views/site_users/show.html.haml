@@ -1,0 +1,29 @@
+%div.user_infomation
+  %div.gravatar
+    = image_tag gravatar_url(@site_user)
+
+  %div.name
+    - if @site_user.name.present? && @site_user.surname.present?
+      = "#{@site_user.name}  #{@site_user.surname}"
+      = "(#{@site_user.country_code})" if @site_user.country
+    - else
+      = @site_user.email
+  %div.edit_user_info
+    = link_to t('edit'), edit_site_user_information_path(@site_user.site_user_information) if can? :edit, @site_user
+  %div.personal_info
+    %div.personal_info_field
+      = t('nick') + ': ' + @site_user.nick if @site_user.nick.present?
+    %div.personal_info_field
+      = t('user_info.date_of_birth') + ': ' + @site_user.date_of_birth if @site_user.date_of_birth.present?
+    %div.personal_info_field
+      = t('user_info.rating') + ': ' + @site_user.rating.to_s if @site_user.rating.present?
+  %div.about_me
+    = @site_user.about_me if @site_user.about_me.present?
+%div.latest_activities
+  %div.latest_infos
+    %span.latest_label= t('site_user.latest_articles') if @site_user.articles.present?
+    - @articles = @site_user.articles
+    = render "articles/list", articles: @articles
+  %div.latest_comment
+    %span.latest_label= t('site_user.latest_comments') if @site_user.site_comments.present?
+    = render "site_comments/list", comments: @site_user.site_comments

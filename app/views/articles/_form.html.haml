@@ -1,0 +1,9 @@
+= simple_form_for @article do |f|
+  = f.input :title, :label => false, :hint => t('form.title')
+  = f.input :lead, :label => false, :hint => t('form.lead')
+  = f.input :summary
+  = f.input :content, :label => false, :input_html => { :cols => 100, :rows => 25 }
+  %p.with-margin
+    = f.button :submit, @article.new_record? ? t('add_label') : t('update_label')
+    or
+    = link_to t('cancel_label'), articles_path, :confirm => t('cancel_confirmation')

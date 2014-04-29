@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140112202350) do
+ActiveRecord::Schema.define(version: 20140429025800) do
 
   create_table "article_photos", force: true do |t|
     t.integer  "article_id"
@@ -130,6 +130,8 @@ ActiveRecord::Schema.define(version: 20140112202350) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "last_active_at"
+    t.integer  "rating"
+    t.text     "about_me"
   end
 
   create_table "site_users", force: true do |t|
@@ -146,6 +148,7 @@ ActiveRecord::Schema.define(version: 20140112202350) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "site_user_information_id"
+    t.string   "role"
   end
 
   add_index "site_users", ["email"], name: "index_site_users_on_email", unique: true, using: :btree

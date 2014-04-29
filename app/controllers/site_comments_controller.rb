@@ -1,4 +1,5 @@
 class SiteCommentsController < ApplicationController
+  load_and_authorize_resource param_method: :site_comment_params
 
   def create
     comment = SiteComment.create(site_comment_params)

@@ -1,5 +1,5 @@
 class BlogEntriesController < ApplicationController
-  #load_and_authorize_resource
+  load_and_authorize_resource param_method: :blog_entry_params
 
   def index
     @blog_entries = BlogEntry.page(params[:page])

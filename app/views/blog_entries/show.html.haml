@@ -1,0 +1,19 @@
+-content_for :head do
+  =javascript_include_tag 'jquery.imagePopup'
+
+%div
+  %div.tags
+    - @blog_entry.tags.each do |tag|
+      %div.tag
+        = link_to tag, tag_path(tag)
+  %div.blog_entry_title
+    %b= @blog_entry.title
+    = link_to t('edit'), edit_blog_entry_path(@blog_entry) if can? :edit, @blog_entry
+    = link_to t('delete'), blog_entry_path(@blog_entry), method: :delete, confirm: t('delete_confirmation') if can? :delete, @blog_entry
+  %div.blog_entry_author
+    = link_to(@blog_entry.author, @blog_entry.site_user) + " #{to_created_at(@blog_entry)}"
+  %div.content
+    = @blog_entry.content
+  %div.comments
+    = render partial: "site_comments/form", locals: {commentable_type: "BlogEntry", commentable_id: @blog_entry.id} if current_user
+    = render partial: "site_comments/list", locals: {comments: @blog_entry.site_comments}

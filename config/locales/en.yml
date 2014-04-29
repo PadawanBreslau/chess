@@ -1,9 +1,17 @@
 en:
+  add_label: Create
+  update_label: Update
+  cancel_label: Cancel
+  cancel_confirmation: Are you sure?
+  delete_confirmation: Are you sure you want to delete?
   news: news
+  read_more: Read more
   article:
-    read_more: Read more
     articles: articles
   site_comment:
     comments: comments
   blog:
     blog: blog
+  site_user:
+    latest_articles: Latest articles
+    latest_comments: Latest comments

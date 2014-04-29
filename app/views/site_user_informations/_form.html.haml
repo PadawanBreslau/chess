@@ -1,0 +1,10 @@
+= simple_form_for @site_user_information do |f|
+  = f.input :name, :label => false, :hint => t('form.name')
+  = f.input :surname, :label => false, :hint => t('form.surname')
+  = f.input :nick, :label => false, :hint => t('form.nickname')
+  = f.input :rating, :label => false, :hint => t('form.rating')
+  = f.input :about_me, :label => false, :hint => t('form.about_me')
+  %p.with-margin
+    = f.button :submit, !@site_user_information.is_initialized? ? t('add_label') : t('update_label')
+    or
+    = link_to t('cancel_label'), site_user_path(@site_user_information.site_user), :confirm => t('cancel_confirmation')

@@ -12,6 +12,7 @@ gem 'devise'
 gem 'kaminari'
 gem 'inherited_resources'
 gem 'simple_form'
+gem 'cancancan'
 
 gem 'acts-as-taggable-on'
 gem 'magic_encoding'
@@ -21,14 +22,10 @@ gem 'debugger', :group => [:development, :test]
 gem "paperclip", "~> 3.0"
 gem 'simplecov', :require => false, :group => :test
 
+#View
 gem 'haml'
 gem 'sass'
 gem 'simple-navigation'
-
-#Aothorization
-gem 'the_role', '~> 2.5.2'
-gem 'the_role_bootstrap3_ui'
-
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

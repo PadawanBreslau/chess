@@ -4,7 +4,7 @@
     %title ZPawn - #{@title || 'chess website'}
     = stylesheet_link_tag "application",  "tokeninput/token-input", "tokeninput/token-input-facebook",
      "site_comments", "events", "photos", "tournaments", "ratings", "user", "rounds","feeds","tags",
-     "article","jquery.tagit", "colorbox",
+     "article", "blog_entry", "jquery.tagit", "colorbox",
      "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/smoothness/jquery-ui.css",
      "css/jquery.lightbox-0.4.css"
     = javascript_include_tag "application"
@@ -21,7 +21,7 @@
     #main_window
       #user_login
         - if site_user_signed_in?
-          = link_to (current_user.nick || current_user.email), site_user_information_path(current_user.site_user_information)
+          = link_to (current_user.nick || current_user.email), site_user_path(current_user)
           \#{link_to "Sign out", destroy_site_user_session_path, :method => :delete}
         - else
           = link_to "Sign up", new_site_user_registration_path

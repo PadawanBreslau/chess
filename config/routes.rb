@@ -19,7 +19,7 @@ Chess::Application.routes.draw do
   root to: 'blog_entries#index'
 
   resources :blog_entries, :only => ["index","show","update","create","destroy", "new", "edit"]
-  resources :site_users, :except => ["show"]
+  resources :site_users, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :site_user_informations, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :players, :only => ["index","show","update","create","destroy", "new", "edit"]
   #resources :photos, :only => ["index","show","update","create","destroy", "new", "edit"]

@@ -1,0 +1,11 @@
+-content_for :head do
+  =javascript_include_tag 'jquery.imagePopup'
+
+-#%h4= pluralize(@search.count, t('site_user.downcase'))
+= table_go_for @site_users, SiteUser, table_html: {class: 'table user-grid'} do |t|
+  - t.column :name
+  - t.column :surname
+  - t.column :nickname
+  - t.column :rating
+  - t.column :reputation
+  - t.column :comments_count, label: 'comments'

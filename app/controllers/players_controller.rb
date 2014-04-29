@@ -1,5 +1,5 @@
 class PlayersController < ApplicationController
-
+  load_and_authorize_resource param_method: :player_params
   def show
     @player = Player.find(params[:id])
     @title = @player.to_title

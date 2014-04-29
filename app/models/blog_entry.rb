@@ -14,6 +14,11 @@ validates :content, presence: true, length: {minimum: 16, maximum: 2**12}
 
 after_create :create_rating
 
+
+  def author
+    site_user.nickname
+  end
+
 private
 
   def create_rating
