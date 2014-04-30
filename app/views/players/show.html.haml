@@ -1,0 +1,30 @@
+%div.player
+  %div.gravatar
+    -# image_tag gravatar_url(@player)
+
+  %div.name
+    - if @player.name.present? && @player.surname.present?
+      = "#{@player.name}  #{@player.surname}"
+      = "(#{@player.country})" if @player.country
+  %div.edit_player
+    = link_to t('edit'), edit_player_path(@player) if can? :edit, @player
+  %div.personal_info
+    %div.personal_info_field
+      = t('player.birthday') + ': ' + @player.birthday if @player.birthday.present?
+    %div.personal_info_field
+      = t('player.rating') + ': ' + @player.current_rating.to_s if @player.current_rating.present?
+    %div.personal_info_field
+      = t('player.highest_rating') + ': ' + @player.highest_rating.to_s if @player.highest_rating.present?
+
+
+%div.player_tournaments
+  = t('player.games')
+  - @player.tournaments_with_games.each do |tournament|
+    %div.tournament
+      %div.tournament_name
+        = tournament.first
+      %div.games
+        - tournament.last.each do |game|
+          = Player.find_by_id(game.white_player_id).to_name
+          = Player.find_by_id(game.black_player_id).to_name
+          = game.chess_result

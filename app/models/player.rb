@@ -11,6 +11,8 @@ class Player < ActiveRecord::Base
 
   has_many :fide_ratings, foreign_key: :fide_id, primary_key: :fide_id
 
+    has_many :white_games, class_name: 'Game', foreign_key: :white_player_id
+    has_many :black_games, class_name: 'Game', foreign_key: :black_player_id
 
   validates :name, presence: true, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}, uniqueness: {scope: :surname}
   validates :middlename, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}, allow_nil: true
@@ -29,6 +31,24 @@ class Player < ActiveRecord::Base
     current = fide_ratings.sort_by{|r| [r.year, r.month]}.first
     return '-' unless current
     "#{current.rating} (#{current.year}-#{Date::ABBR_MONTHNAMES[current.month]})"
+  end
+
+  def tournaments_with_games
+    results = {}
+    games.each do |game|
+      tournament_name = game.round.tournament.tournament_name.to_sym
+      results[tournament_name] = [] unless results.has_key?(tournament_name)
+      results[tournament_name] << game
+    end
+    results
+  end
+
+  def games
+    white_games + black_games
+  end
+
+  def to_name
+    "#{name}, #{surname}"
   end
 
 
