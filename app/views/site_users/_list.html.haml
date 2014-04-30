@@ -1,11 +1,16 @@
 -content_for :head do
   =javascript_include_tag 'jquery.imagePopup'
-
--#%h4= pluralize(@search.count, t('site_user.downcase'))
-= table_go_for @site_users, SiteUser, table_html: {class: 'table user-grid'} do |t|
-  - t.column :name
-  - t.column :surname
-  - t.column :nickname
-  - t.column :rating
-  - t.column :reputation
-  - t.column :comments_count, label: 'comments'
+= grid(@site_users_grid) do |g|
+  - g.column name: t('name'), attribute: 'name' do |user|
+    - link_to user.name, user.site_user if user.name
+  - g.column name: t('surname'), attribute: 'surname' do |user|
+    - link_to user.surname, user.site_user if user.surname
+  - g.column name: t('nickname'), attribute: 'nick' do |user|
+    - link_to user.nick, user.site_user if user.nick
+  - g.column name: t('rating'), attribute: 'rating', filter_type: :range, html: {style: 'text-align: center'}
+  - g.column name: t('date_of_birth'), attribute: 'date_of_birth'
+  - g.column name: t('reputation'), attribute: 'reputation', filter_type: :range, html: {style: 'text-align: center'}
+  - g.column name: t('online') do |user|
+    - user.online_icon_name
+  - g.column name: t('edit') do |user|
+    - link_to t('edit'), edit_site_user_information_path(user)

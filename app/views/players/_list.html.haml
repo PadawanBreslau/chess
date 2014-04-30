@@ -1,0 +1,17 @@
+-content_for :head do
+  =javascript_include_tag 'jquery.imagePopup'
+= grid(@players_grid) do |g|
+  - g.column name: t('name'), attribute: 'name' do |player|
+    - link_to player.name, player_path(player)
+  - g.column name: t('surname'), attribute: 'surname' do |player|
+    - link_to player.surname, player_path(player)
+  - g.column name: t('fide_id'), attribute: 'fide_id'
+  - g.column name: t('country'), attribute: 'country'
+  - g.column name: t('gender'), attribute: 'gender'
+  - g.column name: t('title'), attribute: 'title', custom_filter: {'GM' => 'GM', 'IM' => 'IM', 'WGM' => 'WGM', 'WIM' => 'WIM', 'FM' => 'FM', 'CM' => 'CM'}
+  - g.column name: t('current_rating') do |player|
+    - player.current_rating
+  - g.column name: t('highest_rating') do |player|
+    - player.highest_rating
+  - g.column name: t('edit') do |player|
+    - link_to t('edit'), edit_player_path(player)

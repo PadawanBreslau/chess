@@ -1,6 +1,5 @@
-%div.article_list
-- if @site_users.present?
+%div.site_users_list
+- if @site_users_grid.present?
   = render 'list'
-  = paginate @site_users
 - else
   %p= t('empty_list')

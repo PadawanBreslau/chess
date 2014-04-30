@@ -1,9 +1,9 @@
 class SiteUserInformationsController < ApplicationController
   load_and_authorize_resource param_method: :site_user_information_params
 
+
   def show
     @site_user_information = SiteUserInformation.find(params[:id])
-    @title = @site_user_information.to_title
   end
 
   def edit

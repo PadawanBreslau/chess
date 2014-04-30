@@ -26,6 +26,7 @@ gem 'simplecov', :require => false, :group => :test
 gem 'haml'
 gem 'sass'
 gem 'simple-navigation'
+gem "wice_grid", '3.4.2'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -38,6 +39,8 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
+#gem 'jquery_datepicker'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

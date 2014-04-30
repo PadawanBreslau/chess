@@ -19,10 +19,18 @@ class Player < ActiveRecord::Base
   validates :photo, presence: false, attachment_content_type: { content_type: ["image/jpg","image/png"]}, attachment_size: { in: 0..3.megabytes }
 
 
-def to_title
-  #TODO
-  "FAKE NAME"
-end
+  def highest_rating
+    highest = fide_ratings.sort{|x,y| x.rating <=> y.rating}.first
+    return '-' unless highest
+    "#{highest.rating} (#{highest.year}-#{Date::ABBR_MONTHNAMES[highest.month]})"
+  end
+
+  def current_rating
+    current = fide_ratings.sort_by{|r| [r.year, r.month]}.first
+    return '-' unless current
+    "#{current.rating} (#{current.year}-#{Date::ABBR_MONTHNAMES[current.month]})"
+  end
+
 
 private
 

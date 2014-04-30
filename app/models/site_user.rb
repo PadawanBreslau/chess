@@ -23,36 +23,12 @@ class SiteUser < ActiveRecord::Base
   delegate :nick, to: :site_user_information
   delegate :about_me, to: :site_user_information
   delegate :last_active_at, to: :site_user_information
+  delegate :nickname, to: :site_user_information
+  delegate :online_icon_name, to: :site_user_information
 
   after_create :create_site_user_information
 
   validate :role, inclusion: { in: ROLES }, allow_blank: true
-
-  def nickname
-    nick || email
-  end
-
-  def online?
-    last_active_at > 120.seconds.ago
-  end
-
-  def recently_online?
-    last_active_at > 15.minutes.ago && !online?
-  end
-
-  def online_icon_name
-    if online?
-      "online"
-    elsif recently_online?
-      "recently_offline"
-    else
-      "offline"
-    end
-  end
-
-  def comments_count
-    site_comments.count
-  end
 
   private
 

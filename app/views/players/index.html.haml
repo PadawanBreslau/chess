@@ -1,0 +1,5 @@
+%div.site_users_list
+- if @players_grid.present?
+  = render 'list'
+- else
+  %p= t('empty_list')

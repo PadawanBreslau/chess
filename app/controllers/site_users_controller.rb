@@ -2,7 +2,7 @@ class SiteUsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @site_users = SiteUser.page(params[:page])
+    @site_users_grid = initialize_grid(SiteUserInformation)
   end
 
   def show

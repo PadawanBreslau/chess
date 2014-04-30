@@ -1,0 +1,8 @@
+= simple_form_for @player do |f|
+  = f.input :name, :label => false, :hint => t('form.name')
+  = f.input :surname, :label => false, :hint => t('form.surname')
+  = f.input :fide_id, :label => false, :hint => t('form.fide_id')
+  %p.with-margin
+    = f.button :submit, !@player.new_record? ? t('add_label') : t('update_label')
+    or
+    = link_to t('cancel_label'), players_path, :confirm => t('cancel_confirmation')

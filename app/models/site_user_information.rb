@@ -9,14 +9,36 @@ validate :date_of_birth_validation, if: Proc.new{|info| info.date_of_birth.prese
 validates :rating, allow_blank: true, numericality: {greater_than_or_equal_to: 1000.0, less_than_or_equal_to: 3300.0}
 validates :about_me, allow_blank: true, length: {minimum: 1, maximum: 256}
 
-  def to_title
-    "FAKE NAME"
-    #TODO
+  def fullname
+    "#{name} #{surname}"
+  end
+
+  def nickname
+    nick || site_user.email
   end
 
   def is_initialized?
     name.present? || surname.present? || nick.present? || date_of_birth.present? || rating.present?
   end
+
+  def online?
+    last_active_at > 120.seconds.ago
+  end
+
+  def recently_online?
+    last_active_at > 15.minutes.ago && !online?
+  end
+
+  def online_icon_name
+    if online?
+      "online"
+    elsif recently_online?
+      "recently_offline"
+    else
+      "offline"
+    end
+  end
+
 
 private
 

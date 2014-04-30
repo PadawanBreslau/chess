@@ -10,7 +10,6 @@ describe SiteUserInformationsController do
     it "returns http success" do
       get :show, id: @site_user_info
       assigns(:site_user_information).should eql @site_user_info
-      assigns(:title).should eql @site_user_info.to_title
       response.should be_success
       response.should render_template :show
     end

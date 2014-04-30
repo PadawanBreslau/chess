@@ -10,7 +10,6 @@ describe PlayersController do
     it "returns http success" do
       get :show, id: @player
       assigns(:player).should eql @player
-      assigns(:title).should eql @player.to_title
     end
   end
 
