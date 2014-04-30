@@ -4,6 +4,8 @@
   = f.input :nick, :label => false, :hint => t('form.nickname')
   = f.input :rating, :label => false, :hint => t('form.rating')
   = f.input :about_me, :label => false, :hint => t('form.about_me')
+  = f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
+                              end_year: Date.today.year - 10
   %p.with-margin
     = f.button :submit, !@site_user_information.is_initialized? ? t('add_label') : t('update_label')
     or
