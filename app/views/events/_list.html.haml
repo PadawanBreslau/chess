@@ -16,8 +16,9 @@
       - g.column name: t('event_finish'), attribute: 'event_finish' do |event|
         - short_date(event.event_finish)
       - g.column name: t('url'), attribute: 'url' do |event|
-        - link_to event.url, event.url
+        - link_to event.url, event.url if event.url
       - g.column name: t('edit')  do |event|
         - link_to t('edit'), edit_event_path(event) if can? :edit, Event
-
+      - g.column name: t('delete') do |event|
+        - link_to t('delete'), event_path(event), method: :delete, confirm: t('delete_confirmation') if can? :delete, Event
 

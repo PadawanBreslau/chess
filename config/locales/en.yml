@@ -22,3 +22,6 @@ en:
     new_tournaments: New tournament
     downcase: event
     new: Add new event
+  tournament:
+    downcase: tournament
+    new: Add new tournament
