@@ -28,7 +28,7 @@ event = (Event.create! event_name: 'Event')
 
 tournament = Tournament.create!(tournament_name: 'Amsterdam cup', round_number: 3, event: event, tournament_start: Date.today + 100.days, tournament_finish: Date.today + 102.days)
 
-Game.create!(white_player_id: player1.id, black_player_id: player2.id, result: 2, round: tournament.rounds.first)
+Game.create!(white_player: player1, black_player: player2, white_player_id: player1.id, black_player_id: player2.id, result: 2, round: tournament.rounds.first)
 
 
 

@@ -1,0 +1,19 @@
+%div.all_tournaments
+  - tournaments.each do |tournament|
+    %div.tournament
+      %div.tournament_name_info
+        = link_to tournament.tournament_name, tournament_path(tournament)
+      %div.tournament_info
+        = "(#{short_date(tournament.tournament_start)}-#{short_date(tournament.tournament_finish)})"
+      %div.tournament_info
+        = "#{tournament.round_number} rounds" if tournament.round_number
+      %div.tournament_info
+        = tournament.is_finished ? t('finished') : t('not_finished')
+      %div.tournament_info
+        = link_to t('results'), tournament
+      %div.tournament_info
+        = tournament.place
+      %div.tournament_info
+        = link_to t('website'), tournament.url if tournament.url
+      %div.tournament_info
+        = link_to t('external_transmition'), tournament.external_transmition_url if tournament.external_transmition_url

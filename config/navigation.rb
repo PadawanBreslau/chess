@@ -12,10 +12,16 @@ SimpleNavigation::Configuration.run do |navigation|
       site_info.item :key_photoalbum, t('article.articles'), articles_path
     end
 
-    primary.item :key_2, 'Players',  players_path do |players|
-      players.item :key_2_1, 'Search',  root_path
-      players.item :key_2_2, 'Top',  players_path
-      players.item :key_2_3, 'Statistics',  players_path
+    primary.item :key_tournaments, t('tournaments'),  tournaments_path do |players|
+      players.item :key_tournaments_1, t('events'),  events_path
+      players.item :key_tournaments_2, t('recent'),  players_path
+      players.item :key_tournaments_3, t('game_of_the_week'),  players_path
+    end
+
+    primary.item :key_players, 'Players',  players_path do |players|
+      players.item :key_players_1, 'Search',  root_path
+      players.item :key_players_2, 'Top',  players_path
+      players.item :key_players_3, 'Statistics',  players_path
     end
 
     #   primary.item :key_3, 'Calendar',  root_path do |calendar|

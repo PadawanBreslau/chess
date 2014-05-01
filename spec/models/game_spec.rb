@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Game do
   context 'creating game' do
-  	it 'should create simple game' do 
+    it 'should create simple game' do 
       FactoryGirl.build(:game).should be_valid
       FactoryGirl.build(:game_with_players).should be_valid
       expect{@game = FactoryGirl.create(:game_with_players)}.not_to raise_error

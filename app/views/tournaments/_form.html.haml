@@ -1,0 +1,15 @@
+= simple_form_for @tournament do |f|
+  = f.input :tournament_name
+  = f.input :place
+  = f.input :tournament_start, as: :date, start_year: Date.today.year-5, end_year: Date.today.year + 5, use_short_month: true
+  = f.input :tournament_finish, as: :date, start_year: Date.today.year-5, end_year: Date.today.year + 5, use_short_month:  true
+  = f.input :url
+  = f.input :external_transmition_url
+  = f.input :round_number
+  = f.input :is_finished
+  = f.hidden_field :event_id, value: params["event_id"]
+
+  %p.with-margin
+    = f.submit @tournament.new_record? ? t('add_label', :name => t('tournament.downcase')) : t('update_label', :name => t('tournament.downcase')), data: { disable_with: t('disable_form_with')}
+    or
+    = link_to t('cancel_label'), tournaments_path, :confirm => t('cancel_confirmation')

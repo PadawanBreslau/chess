@@ -4,6 +4,7 @@ en:
   cancel_label: Cancel
   cancel_confirmation: Are you sure?
   delete_confirmation: Are you sure you want to delete?
+  disable_form_with: disable form
   news: news
   read_more: Read more
   article:
@@ -15,3 +16,9 @@ en:
   site_user:
     latest_articles: Latest articles
     latest_comments: Latest comments
+  event:
+    tournaments: Event tournaments
+    no_tournaments: No tournaments
+    new_tournaments: New tournament
+    downcase: event
+    new: Add new event

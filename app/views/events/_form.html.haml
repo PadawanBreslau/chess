@@ -1,0 +1,11 @@
+= simple_form_for @event do |f|
+  = f.input :event_name
+  = f.input :description
+  = f.input :event_start, as: :date, start_year: Date.today.year-5, end_year: Date.today.year + 5, use_short_month: true
+  = f.input :event_finish, as: :date, start_year: Date.today.year-5, end_year: Date.today.year + 5, use_short_month:  true
+  = f.input :url
+
+  %p.with-margin
+    = f.submit @event.new_record? ? t('add_label', :name => t('event.downcase')) : t('update_label', :name => t('event.downcase')), data: { disable_with: t('disable_form_with')}
+    or
+    = link_to t('cancel_label'), events_path, :confirm => t('cancel_confirmation')

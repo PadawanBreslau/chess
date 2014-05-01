@@ -1,0 +1,23 @@
+%div.event
+  %div.event_header
+    %div.event_name
+      = @event.event_name
+      = "(#{short_date(@event.event_start)}-#{short_date(@event.event_finish)})"
+      = link_to t('edit'), edit_event_path(@event) if can? :manage, @event
+      = link_to t('delete'), event_path(@event), :method => :delete, :confirm => t('delete_confirmation') if can? :manage, @event
+    %div.event_url
+      = image_tag('icons/web.png')  # IKONKA SIECI
+      = link_to @event.url, @event.url
+  %div.event_description
+    = @event.description
+  %div.tournament_list
+    - if @event.tournaments.present?
+      = render partial: 'tournaments/simple_list', locals:  {tournaments: @event.tournaments }
+    - else
+      = t('event.no_tournaments')
+  %div.new_tournament
+    = link_to t('event.new_tournament'), new_tournament_path(event_id: @event.id) if can? :create, Tournament
+
+  %div.comments
+    = render partial: "site_comments/form", locals: {commentable_type: "Event", commentable_id: @event.id} if can? :add, SiteComment
+    = render partial: "site_comments/list", locals: {comments: @event.site_comments}

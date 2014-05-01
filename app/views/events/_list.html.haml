@@ -1,0 +1,23 @@
+-content_for :head do
+  =javascript_include_tag 'jquery.imagePopup'
+
+%div.event_index
+  %div.new_event
+    = link_to t('event.new'), new_event_path if can? :add, Event
+  %div.event_grid
+    -#%h4= pluralize(@events.count, t('event.downcase'))
+    = grid(@events_grid) do |g|
+      - g.column name: t('name'), attribute: 'event_name' do |event|
+        - link_to event.event_name, event_path(event)
+      - g.column name: t('description'), attribute: 'description' do |event|
+        - event.description.try(:take, 100)
+      - g.column name: t('event_start'), attribute: 'event_start' do |event|
+        - short_date(event.event_start)
+      - g.column name: t('event_finish'), attribute: 'event_finish' do |event|
+        - short_date(event.event_finish)
+      - g.column name: t('url'), attribute: 'url' do |event|
+        - link_to event.url, event.url
+      - g.column name: t('edit')  do |event|
+        - link_to t('edit'), edit_event_path(event) if can? :edit, Event
+
+
