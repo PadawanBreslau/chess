@@ -25,3 +25,10 @@ en:
   tournament:
     downcase: tournament
     new: Add new tournament
+    no_rounds: No rounds in this tournament yet
+    rounds: rounds
+  round:
+    new: Add new round
+    games_count: Games
+    round_number: Nr
+    round_date: Round date

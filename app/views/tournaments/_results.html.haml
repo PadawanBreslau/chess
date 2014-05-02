@@ -1,0 +1,23 @@
+%div.results_table
+  - results.each_with_index do |result,i|
+    %div.result_row
+      = "#{i+1}. "
+      %span.result_player_name
+        = link_to result.player.to_s, player_path(result.player)
+      %span.result_player_rating
+        = result.player.rating.to_s
+      %span.result_player_country
+        = result.player.country_code
+      %span.result_player_count
+        = result[:points]
+      - if can? :manage, result
+        %span.manage_result
+          - link_to t('edit'), edit_result_path(result)
+          = link_to t('delete'), result_path(result), :method => :delete, :confirm => t('are_you_sure')
+- if defined? full_results
+  %div.result_last_round
+    - if results.present?
+      %div.last_rounds_results
+        = t('tournament.last_round')
+      %div.last_round_games
+        = render :partial => "tournaments/games", :locals => {:round => results.first.tournament.rounds.last}

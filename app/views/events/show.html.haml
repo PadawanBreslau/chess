@@ -12,7 +12,7 @@
     = @event.description
   %div.tournament_list
     - if @event.tournaments.present?
-      = render partial: 'tournaments/simple_list', locals:  {tournaments: @event.tournaments }
+      = render partial: 'tournaments/simple_list', locals: {tournaments: @event.tournaments }
     - else
       = t('event.no_tournaments')
   %div.new_tournament

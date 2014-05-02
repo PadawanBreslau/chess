@@ -7,6 +7,12 @@ class TournamentsController < InheritedResources::Base
     @tournaments_grid = initialize_grid(Tournament)
   end
 
+  def show
+    @tournament = Tournament.find(params["id"])
+    @rounds_grid = initialize_grid(Round, conditions: {tournament_id: @tournament.id}, order: 'rounds.round_number', order_direction: 'asc')
+  end
+
+
 
   def permitted_params
     params.permit(tournament: FIELDS)

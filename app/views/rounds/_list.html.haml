@@ -1,0 +1,18 @@
+-content_for :head do
+  =javascript_include_tag 'jquery.imagePopup'
+
+%div.round_index
+  %div.new_round
+    -#= link_to t('round.new'), new_round_path if can? :add, Round
+  %div.round_grid
+    -#%h4= pluralize(@rounds.count, t('round.downcase'))
+    = grid(@rounds_grid) do |g|
+      - g.column name: t('round.round_number'), attribute: 'round_number'
+      - g.column name: t('tournament.tournament') do |round|
+        - link_to round.tournament.tournament_name
+      - g.column name: t('round.round_date'), attribute: 'date' do |round|
+        - short_date(round.date)
+      - g.column name: t('round.game_count') do |round|
+        - round.games.count
+      - g.column name: t('round.games') do |round|
+        - link_to t('round.watch_games'), games_path(round_id: round.id)
