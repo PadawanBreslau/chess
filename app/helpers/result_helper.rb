@@ -35,6 +35,7 @@ module ResultHelper
         result.mini_bucholtz = result.bucholtz
         result.mini_bucholtz -= @bucholtz_helper[res_sym][:min_bucholtz] if @bucholtz_helper[res_sym][:min_bucholtz]
         result.mini_bucholtz -= @bucholtz_helper[res_sym][:max_bucholtz] if @bucholtz_helper[res_sym][:max_bucholtz]
+        result.mini_bucholtz = 0 if result.mini_bucholtz < 0
         result.progress = @progress_helper[res_sym]
         result.save
       end

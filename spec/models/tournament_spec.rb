@@ -61,12 +61,45 @@ describe Tournament do
       FactoryGirl.create(:tournament).games.should be_empty
     end
 
-    it 'should not have games if rounds present, but without rounds' do
+    it 'should not have games if rounds present, but without games' do
       FactoryGirl.create(:tournament_with_rounds).games.should be_empty
     end
 
     it 'should have games if rounds present with rounds' do
       FactoryGirl.create(:tournament_with_rounds_and_games).games.should_not be_empty
+    end
+  end
+
+  context 'tournament_result' do
+    before do
+      @tournament = FactoryGirl.create(:tournament)
+      @round = FactoryGirl.create(:round, tournament: @tournament)
+      @tournament.reload
+      @player1 = FactoryGirl.create(:player, fide_id: 123, name: 'Andy')
+      @player2= FactoryGirl.create(:player, fide_id: 321, name: 'Bert')
+    end
+
+    it 'should create a Result object after adding a Game' do
+      expect{Game.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)}.to change(Result, :count).from(0).to(2)
+      Result.count.should eq 2
+    end
+
+    it 'should fill all data in result' do
+      expect{Game.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)}.not_to raise_error
+      player1_result = @player1.results.first
+      player2_result = @player2.results.first
+
+      player1_result.points.should eq 1.0
+      player1_result.progress.should eq 1.0
+      player1_result.mini_bucholtz.should eq 0.0
+      player1_result.bucholtz.should eq 0.0
+      player1_result.games_count.should eq 1
+
+      player2_result.points.should eq 0.0
+      player2_result.progress.should eq 0.0
+      player2_result.mini_bucholtz.should eq 0.0
+      player2_result.bucholtz.should eq 1.0
+      player2_result.games_count.should eq 1
     end
   end
 end
