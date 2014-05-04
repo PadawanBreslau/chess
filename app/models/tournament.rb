@@ -1,31 +1,34 @@
 class Tournament < ActiveRecord::Base
+  include ResultHelper
 
-NAME_REGEX = /[a-zA-Z\s]+/
-URL_REGEX = /((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/ix
+  NAME_REGEX = /[a-zA-Z\s]+/
+  URL_REGEX = /((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/ix
 
-has_many :rounds
-has_many :games, through: :rounds
-belongs_to :event
-has_many :site_comments, as: :commentable, dependent: :destroy
-has_many :results
+  has_many :rounds
+  has_many :games, through: :rounds
+  belongs_to :event
+  has_many :site_comments, as: :commentable, dependent: :destroy
+  has_many :results
 
-validates :tournament_name, presence: true, length: {minimum: 2, maximum: 128}, uniqueness: true
-validates :round_number, numericality: true, inclusion: (1..999), allow_nil: true
-validates :place, format: { with: NAME_REGEX }, allow_nil: true
-validates :url, format: { with: URL_REGEX }, allow_nil: true
-validates :external_transmition_url, format: { with: URL_REGEX }, allow_nil: true
+  validates :tournament_name, presence: true, length: {minimum: 2, maximum: 128}, uniqueness: true
+  validates :round_number, numericality: true, inclusion: (1..999), allow_nil: true
+  validates :place, format: { with: NAME_REGEX }, allow_nil: true
+  validates :url, format: { with: URL_REGEX }, allow_nil: true
+  validates :external_transmition_url, format: { with: URL_REGEX }, allow_nil: true
 
-validate :check_if_start_is_before_finish,
-  :if => Proc.new {|t| t.tournament_start.present? && t.tournament_finish.present?}
+  validate :check_if_start_is_before_finish,
+    :if => Proc.new {|t| t.tournament_start.present? && t.tournament_finish.present?}
 
-after_save :create_rounds
+  after_save :create_rounds
 
+  def players
+    return [] if rounds.empty?
+    rounds.first.players
+  end
 
-def players
-  return [] if rounds.empty?
-  rounds.first.players
-end
-
+  def results(limit = 15)
+    Result.tournament(self, limit)
+  end
 
 private
 

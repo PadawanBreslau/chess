@@ -35,7 +35,7 @@ Chess::Application.routes.draw do
   resources :results, :only => ["edit", "destroy"]
 
   resources :tournaments do
-    collection do
+    member do
       get 'results'
       get 'games'
     end
