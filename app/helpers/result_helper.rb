@@ -10,18 +10,16 @@ module ResultHelper
       @progress_helper = {}
 
       games.each do |game|
-        white_result = Result.find_or_create_by_tournament_id_and_player_id(id, game.white_player.id)
-        #RES_LOG.info "Find or create white player result: #{white_result.inspect}"
-        black_result = Result.find_or_create_by_tournament_id_and_player_id(id, game.black_player.id)
-        #RES_LOG.info "Find or create black player result: #{black_result.inspect}"
+        white_result = Result.find_or_create_by(tournament_id: id, player_id: game.white_player.id)
+        black_result = Result.find_or_create_by(tournament_id: id, player_id: game.black_player.id)
         update_results(white_result, black_result, game.result)
       end
 
       @bucholtz_helper = {}
 
       games.each do |game|
-        white_result = Result.find_or_create_by_tournament_id_and_player_id(id, game.white_player.id)
-        black_result = Result.find_or_create_by_tournament_id_and_player_id(id, game.black_player.id)
+        white_result = Result.find_or_create_by(tournament_id: id, player_id: game.white_player.id)
+        black_result = Result.find_or_create_by(tournament_id: id, player_id: game.black_player.id)
         @bucholtz_helper[white_result.id.to_s.to_sym] = {} unless @bucholtz_helper[white_result.id.to_s.to_sym]
         @bucholtz_helper[black_result.id.to_s.to_sym] = {} unless @bucholtz_helper[black_result.id.to_s.to_sym]
         update_bucholtz(white_result, black_result)
