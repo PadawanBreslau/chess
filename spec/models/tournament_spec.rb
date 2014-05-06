@@ -101,5 +101,49 @@ describe Tournament do
       player2_result.bucholtz.should eq 1.0
       player2_result.games_count.should eq 1
     end
+
+    it 'should fill all data in result - 2' do
+      @round2 = FactoryGirl.create(:round, tournament: @tournament)
+      @tournament.reload
+      Game.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)
+      Game.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.second, result: 2)
+      player1_result = @player1.results.first
+      player2_result = @player2.results.first
+
+      player1_result.points.should eq 1.5
+      player1_result.progress.should eq 2.5
+      player1_result.mini_bucholtz.should eq 0.0
+      player1_result.bucholtz.should eq 1.0 # twice counted
+      player1_result.games_count.should eq 2
+
+      player2_result.points.should eq 0.5
+      player2_result.progress.should eq 0.5
+      player2_result.mini_bucholtz.should eq 0.0
+      player2_result.bucholtz.should eq 3.0
+      player2_result.games_count.should eq 2
+    end
+
+    it 'should fill all data in result - 3' do
+      @round2 = FactoryGirl.create(:round, tournament: @tournament)
+      @round3 = FactoryGirl.create(:round, tournament: @tournament)
+      @tournament.reload
+      Game.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)
+      Game.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.second, result: 2)
+      Game.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.last, result: 1)
+      player1_result = @player1.results.first
+      player2_result = @player2.results.first
+
+      player1_result.points.should eq 1.5
+      player1_result.progress.should eq 4.0
+      player1_result.mini_bucholtz.should eq 1.5
+      player1_result.bucholtz.should eq 4.5 # thrice counted
+      player1_result.games_count.should eq 3
+
+      player2_result.points.should eq 1.5
+      player2_result.progress.should eq 2.0
+      player2_result.mini_bucholtz.should eq 1.5
+      player2_result.bucholtz.should eq 4.5
+      player2_result.games_count.should eq 3
+    end
   end
 end

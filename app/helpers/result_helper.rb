@@ -79,7 +79,7 @@ module ResultHelper
   end
 
   def update_player_result(result, points)
-    @progress_helper[result.id.to_s.to_sym] = (2*result.points)+points
+    @progress_helper[result.id.to_s.to_sym] = @progress_helper[result.id.to_s.to_sym].to_f + result.points + points
     result.games_count += 1
     result.points += points
     result.save
