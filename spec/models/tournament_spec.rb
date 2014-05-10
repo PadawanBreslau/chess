@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Tournament do
+  def create_game(player1, player2, round,result)
+    Game.create!(white_player: player1, white_player_id: player1.id , black_player: player2, black_player_id: player2.id, round: round, result: result)
+  end
+
   context 'creating tournaments' do
     it 'should create simple tournament' do
       FactoryGirl.build(:tournament).should be_valid
@@ -145,5 +149,49 @@ describe Tournament do
       player2_result.bucholtz.should eq 4.5
       player2_result.games_count.should eq 3
     end
+
+    it 'should fill all data in result - 3' do
+      @round2 = FactoryGirl.create(:round, tournament: @tournament)
+      @round3 = FactoryGirl.create(:round, tournament: @tournament)
+      @player3 = FactoryGirl.create(:player, fide_id: 456, name: 'Carl')
+      @player4= FactoryGirl.create(:player, fide_id: 654, name: 'Darren')
+      @tournament.reload
+      create_game(@player1, @player4, @round, 1)
+      create_game(@player2, @player3, @round, 3)
+      create_game(@player1, @player2, @round2, 1)
+      create_game(@player4, @player3, @round2, 1)
+      create_game(@player3, @player1, @round3, 2)
+      create_game(@player2, @player4, @round3, 2)
+      player1_result = @player1.results.first
+      player2_result = @player2.results.first
+      player3_result = @player3.results.first
+      player4_result = @player4.results.first
+
+      player1_result.points.should eq 2.5
+      player1_result.progress.should eq 5.5
+      player1_result.mini_bucholtz.should eq 1.5
+      player1_result.bucholtz.should eq 3.5
+      player1_result.games_count.should eq 3
+
+      player2_result.points.should eq 0.5
+      player2_result.progress.should eq 0.5
+      player2_result.mini_bucholtz.should eq 1.5
+      player2_result.bucholtz.should eq 5.5
+      player2_result.games_count.should eq 3
+
+      player3_result.points.should eq 1.5
+      player3_result.progress.should eq 3.5
+      player3_result.mini_bucholtz.should eq 1.5
+      player3_result.bucholtz.should eq 4.5
+      player3_result.games_count.should eq 3
+
+      player4_result.points.should eq 1.5
+      player4_result.progress.should eq 2.5
+      player4_result.mini_bucholtz.should eq 1.5
+      player4_result.bucholtz.should eq 4.5
+      player4_result.games_count.should eq 3
+
+    end
+
   end
 end
