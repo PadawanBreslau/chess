@@ -80,7 +80,14 @@ describe Tournament do
       @round = FactoryGirl.create(:round, tournament: @tournament)
       @tournament.reload
       @player1 = FactoryGirl.create(:player, fide_id: 123, name: 'Andy')
-      @player2= FactoryGirl.create(:player, fide_id: 321, name: 'Bert')
+      @player2 = FactoryGirl.create(:player, fide_id: 321, name: 'Bert')
+    end
+
+    it 'the tournament should know its players' do
+      @tournament.players.should eq []
+      create_game(@player1, @player2, @round, 1)
+      @tournament.reload
+      @tournament.players.should eq [@player1, @player2]
     end
 
     it 'should create a Result object after adding a Game' do
@@ -192,6 +199,5 @@ describe Tournament do
       player4_result.games_count.should eq 3
 
     end
-
   end
 end

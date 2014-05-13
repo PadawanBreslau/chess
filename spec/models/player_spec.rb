@@ -60,12 +60,12 @@ describe Player do
 
       FactoryGirl.build(:player, name: 'Beata', surname: 'Kądziołka-Zawadzka').should be_valid
       FactoryGirl.build(:player, name: 'José Enrique').should be_valid
-    end	
+    end
 
-    it 'should look for a player in FIDE database and assign fide_id to player' do 
+    it 'should look for a player in FIDE database and assign fide_id to player' do
       player = FactoryGirl.create(:player, name: "Jolanta", surname: "Zawadzka")
       player.fide_id.should eql 1122320
-      
+
       player = FactoryGirl.create(:player, name: "Beata", surname: "Kądziołka")
       player.fide_id.should eql 1119990
     end
@@ -93,4 +93,25 @@ describe Player do
     end
   end
 
-end 
+  context 'highest fide rating' do
+    it 'should return empty if no rating' do
+      player = FactoryGirl.create(:player)
+      player.highest_rating.should eq '-'
+      player.current_rating.should eq '-'
+    end
+
+    it 'should return higest rating as higest an newest as current' do
+      player = FactoryGirl.create(:player, fide_id: 12213)
+      highest = FactoryGirl.create(:fide_rating, fide_id: player.fide_id, rating: 2222, year: 2012, month: 12)
+      different = FactoryGirl.create(:fide_rating, fide_id: player.fide_id, rating: 2181, year: 2013, month: 1)
+      current = FactoryGirl.create(:fide_rating, fide_id: player.fide_id, rating: 2121, year: 2013, month: 2)
+      player.get_highest_rating.should eq highest
+      player.get_current_rating.should eq current
+
+      player.highest_rating.should eq PlayerHelper::format_rating_output(highest.rating, highest.year, highest.month)
+      player.current_rating.should eq PlayerHelper::format_rating_output(current.rating, current.year, current.month)
+    end
+  end
+
+end
+

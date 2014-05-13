@@ -1,11 +1,12 @@
 # -*- encoding : utf-8 -*-
 class Player < ActiveRecord::Base
+  include PlayerHelper
 
   NAME_REGEX = /\A[\s[:alpha:]-]*\z/u
   FIDE_FILE_PATH = "public/standard_oct13frl.txt"
 
   #attr_accessible :photo
-  has_attached_file :photo, :styles => { :medium => "400x400>", :thumb => "80x80>" }, :default_url => "/images/:style/example_player.png", :url  => "/assets/photos/:id/:style/:basename.:extension", :path => ":rails_root/public/assets/player_photos/:id/:style/:basename.:extension"
+  has_attached_file :photo, styles: { medium: "400x400>", thumb: "80x80>" }, default_url: "/images/:style/example_player.png", url: "/assets/photos/:id/:style/:basename.:extension", path: ":rails_root/public/assets/player_photos/:id/:style/:basename.:extension"
 
   has_many :fide_ratings, foreign_key: :fide_id, primary_key: :fide_id
   has_many :white_games, class_name: 'Game', foreign_key: :white_player_id
@@ -20,16 +21,18 @@ class Player < ActiveRecord::Base
 
   before_save :set_fide_id, if: proc {|player| player.fide_id.nil?}
 
+
+
   def highest_rating
-    highest = fide_ratings.sort{|x,y| x.rating <=> y.rating}.first
+    highest = get_highest_rating
     return '-' unless highest
-    "#{highest.rating} (#{highest.year}-#{Date::ABBR_MONTHNAMES[highest.month]})"
+    PlayerHelper::format_rating_output(highest.rating, highest.year, highest.month)
   end
 
   def current_rating
-    current = fide_ratings.sort_by{|r| [r.year, r.month]}.first
+    current = get_current_rating
     return '-' unless current
-    "#{current.rating} (#{current.year}-#{Date::ABBR_MONTHNAMES[current.month]})"
+    PlayerHelper::format_rating_output(current.rating, current.year ,current.month)
   end
 
   def tournaments_with_games
