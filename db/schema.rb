@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140518091832) do
+ActiveRecord::Schema.define(version: 20140518163907) do
 
   create_table "article_photos", force: true do |t|
     t.integer  "article_id"
@@ -177,6 +177,13 @@ ActiveRecord::Schema.define(version: 20140518091832) do
     t.integer "site_user_id", null: false
     t.integer "rate_id",      null: false
     t.string  "rate_action"
+  end
+
+  create_table "statistics", force: true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taggings", force: true do |t|

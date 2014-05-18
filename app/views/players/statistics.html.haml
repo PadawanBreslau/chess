@@ -1,5 +1,10 @@
-- line_chart @players.map{|p| p.get_current_rating}.compact
-= pie_chart @players.group(:country).count.keep_if{|_,v| v > 100}, id: "country-chart", height: "200px", width: "100px"
-= column_chart (@prepared_ratings_hash), height: "400px"
-= column_chart (@prepared_gamecount_hash), height: "400px"
-= pie_chart(@prepared_international_title_hash)
+%div.players_charts
+  %div.rating_chart
+    = t('ratings')
+    = column_chart (@prepared_ratings_hash), height: "400px"
+  %div.games_chart
+    = t('games')
+    = column_chart (@prepared_gamecount_hash), height: "400px"
+  %div.titles_chart
+    = t('titles')
+    = pie_chart(@prepared_international_title_hash)
