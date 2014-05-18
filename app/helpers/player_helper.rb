@@ -8,11 +8,53 @@ module PlayerHelper
   end
 
   def get_highest_rating
-    highest = fide_ratings.sort{|x,y| y.rating <=> x.rating}.first
+    fide_ratings.sort{|x,y| y.rating <=> x.rating}.first
+  end
+
+  def get_lowest_rating
+    fide_ratings.sort{|x,y| x.rating <=> y.rating}.first
   end
 
   def get_current_rating
-    current = fide_ratings.sort_by{|r| [r.year, r.month]}.last
+    fide_ratings.sort_by{|r| [r.year, r.month]}.last
+  end
+
+  def get_player_ratings
+    ratings = Hash.new
+    fide_ratings.each do |rating|
+      ratings["#{rating.year}/#{rating.month}"] = rating.rating
+    end
+    ratings
+  end
+
+  def get_player_colors
+    {"white" => white_games.count, "black" => black_games.count}
+  end
+
+  def get_player_results(colour)
+    results = Hash.new(0)
+    if colour == 'white'
+      white_games.each do |wgame|
+        results["White wins"] += 1 if wgame.result == 1
+        results["White draws"] += 1 if wgame.result == 2
+        results["White loses"] += 1 if wgame.result == 3
+      end
+    elsif colour == 'black'
+      black_games.each do |bgame|
+        results["Black loses"] += 1 if bgame.result == 1
+        results["Black draws"] += 1 if bgame.result == 2
+        results["Black wins"] += 1 if bgame.result == 3
+      end
+    end
+    results
+  end
+
+  def get_player_activities
+    games = Hash.new
+    fide_ratings.each do |rating|
+      games["#{rating.year}/#{rating.month}"] = rating.games
+    end
+    games
   end
 
   module ClassMethods

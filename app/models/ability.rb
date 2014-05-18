@@ -20,7 +20,7 @@ class Ability
     elsif site_user.role == 'banned'
       can :read, SiteUserInformation
     else
-      can [:statistics], Player
+      can [:statistics, :player_stats], Player
       can :read, :all
     end
   end

@@ -1,0 +1,16 @@
+%div.player_charts
+  %div.rating_chart
+    = t('ratings')
+    = line_chart (@player_ratings), height: "400px", discrete: true, min: @player.get_lowest_rating.rating - 100
+  %div.games_chart
+    = t('games')
+    = column_chart (@player_activities), height: "400px", discrete: true
+  %div.titles_chart
+    = t('titles')
+    = pie_chart(@player_games_colors)
+  %div.results_chart
+    = t('titles')
+    %div.one_chart
+    = pie_chart(@player_results_white)
+    %div.one_chart
+    = pie_chart(@player_results_black)

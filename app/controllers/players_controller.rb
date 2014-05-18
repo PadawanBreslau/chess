@@ -47,6 +47,15 @@ class PlayersController < ApplicationController
     @prepared_gamecount_hash = Statistic.find_by_name("games_number").to_hash
   end
 
+  def player_stats
+    @player = Player.find(params[:id])
+    @player_ratings = @player.get_player_ratings
+    @player_games_colors = @player.get_player_colors
+    @player_results_white = @player.get_player_results('white')
+    @player_results_black = @player.get_player_results('black')
+    @player_activities = @player.get_player_activities  # FIDE RATING - games per period
+  end
+
   private
 
   def player_params

@@ -9,6 +9,10 @@ Chess::Application.routes.draw do
     collection do
       get 'statistics'
     end
+
+    member do
+      get 'player_stats'
+    end
   end
 
   resources :blog_entries, :only => ["index","show","update","create","destroy", "new", "edit"]
