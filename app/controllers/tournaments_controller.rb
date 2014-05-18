@@ -10,10 +10,12 @@ class TournamentsController < InheritedResources::Base
   def show
     @tournament = Tournament.find(params["id"])
     @rounds_grid = initialize_grid(Round, conditions: {tournament_id: @tournament.id}, order: 'rounds.round_number', order_direction: 'asc')
+    @results_grid = initialize_grid(@tournament.results(1000), per_page: 100)
   end
 
   def results
     @tournament = Tournament.find(params[:id])
+    @results_grid = initialize_grid(@tournament.results(1000), per_page: 100)
   end
 
 

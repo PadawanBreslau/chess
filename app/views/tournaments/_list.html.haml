@@ -13,7 +13,7 @@
         - short_date(tournament.tournament_start)
       - g.column name: t('tournament_finish'), attribute: 'tournament_finish' do |tournament|
         - short_date(tournament.tournament_finish)
-      - g.column name: t('url'), attribute: 'place'
+      - g.column name: t('place'), attribute: 'place'
       - g.column name: t('url'), attribute: 'url' do |tournament|
         - link_to tournament.url, tournament.url if tournament.url
       - g.column name: t('external_url'), attribute: 'external_transmition_url' do |tournament|

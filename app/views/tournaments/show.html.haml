@@ -11,7 +11,7 @@
       - else
         = t('tournament.no_rounds')
     %div.tournament_results
-      = render :partial => "tournaments/results", :locals => {:results => @tournament.results}
+      = render partial: "tournaments/results", locals: {results: @tournament.results}
   %div.tournament_comments
-    = render :partial => "site_comments/form", locals: {commentable_type: "Tournament", commentable_id: @tournament.id}
+    = render partial: "site_comments/form", locals: {commentable_type: "Tournament", commentable_id: @tournament.id} if can? :add, SiteComment
     = render partial: "site_comments/list", locals: {comments: @tournament.site_comments}

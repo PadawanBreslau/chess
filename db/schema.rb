@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140502170644) do
+ActiveRecord::Schema.define(version: 20140518091832) do
 
   create_table "article_photos", force: true do |t|
     t.integer  "article_id"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20140502170644) do
     t.float   "mini_bucholtz", default: 0.0, null: false
     t.float   "berger",        default: 0.0, null: false
     t.float   "progress",      default: 0.0, null: false
+    t.float   "avg_rating"
   end
 
   create_table "rounds", force: true do |t|

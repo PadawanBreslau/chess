@@ -24,6 +24,7 @@ module ResultHelper
         @bucholtz_helper[black_result.id.to_s.to_sym] = {} unless @bucholtz_helper[black_result.id.to_s.to_sym]
         update_bucholtz(white_result, black_result)
         update_berger(white_result, black_result, game.result)
+        update_avg_rating(white_result, black_result)
       end
 
       results.each do |result|
@@ -110,6 +111,20 @@ module ResultHelper
   def update_berger_result(result, points)
     RES_LOG.info "BERGER"
     result.berger += points
+    result.save
+  end
+
+  def update_avg_rating(white_result, black_result)
+    white_rating = white_result.player.get_current_rating
+    black_rating = black_result.player.get_current_rating
+    update_player_avg_rating(white_result, black_rating)
+    update_player_avg_rating(black_result, white_rating)
+  end
+
+  def update_player_avg_rating(result, rating)
+    rating = rating.nil? ? 1000.0 : rating.rating
+    result_ratings = result.avg_rating.present? ? result.avg_rating*(result.games_count) : 0
+    result.avg_rating = ((result_ratings + rating)/(result.games_count)).round
     result.save
   end
 

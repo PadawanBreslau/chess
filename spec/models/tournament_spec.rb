@@ -200,4 +200,62 @@ describe Tournament do
 
     end
   end
+
+  context 'tournament_result - avg rating' do
+    before do
+      @tournament = FactoryGirl.create(:tournament)
+      @round = FactoryGirl.create(:round, tournament: @tournament)
+      @tournament.reload
+      @player1 = FactoryGirl.create(:player, fide_id: 123, name: 'Andy')
+      @player2 = FactoryGirl.create(:player, fide_id: 321, name: 'Bert')
+      @fide_rating1 = FactoryGirl.create(:fide_rating, rating: 2400, fide_id: 123)
+    end
+
+    it 'player on should have current rating, while player 2 dont' do
+      @player1.get_current_rating.rating.should eql 2400
+      @player2.get_current_rating.should be_nil
+    end
+
+    it 'when opponent has no rating the average is counted as 1000' do
+      create_game(@player1, @player2, @round, 1)
+      player1_result = @player1.results.first
+      player2_result = @player2.results.first
+
+      player1_result.avg_rating.should eq 1000
+      player2_result.avg_rating.should eq 2400
+    end
+
+    it 'should count average rating' do
+      @player3 = FactoryGirl.create(:player, fide_id: 666, name: 'Carl')
+      @fide_rating2 = FactoryGirl.create(:fide_rating, rating: 2000, fide_id: 666)
+      create_game(@player1, @player2, @round, 1)
+      create_game(@player1, @player3, @round, 1)
+      create_game(@player3, @player2, @round, 1)
+
+      player1_result = @player1.results.first
+      player2_result = @player2.results.first
+      player3_result = @player3.results.first
+
+      player1_result.avg_rating.should eq 1500.0
+      player2_result.avg_rating.should eq 2200.0
+      player3_result.avg_rating.should eq 1700.0
+    end
+
+    it 'should count average rating - 2' do
+      @player3 = FactoryGirl.create(:player, fide_id: 666, name: 'Carl')
+      @fide_rating2 = FactoryGirl.create(:fide_rating, rating: 2600, fide_id: 666)
+      @fide_rating3 = FactoryGirl.create(:fide_rating, rating: 2100, fide_id: 321)
+      create_game(@player1, @player2, @round, 1)
+      create_game(@player1, @player3, @round, 1)
+      create_game(@player3, @player2, @round, 1)
+
+      player1_result = @player1.results.first
+      player2_result = @player2.results.first
+      player3_result = @player3.results.first
+
+      player1_result.avg_rating.should eq 2350.0
+      player2_result.avg_rating.should eq 2500.0
+      player3_result.avg_rating.should eq 2250.0
+    end
+  end
 end

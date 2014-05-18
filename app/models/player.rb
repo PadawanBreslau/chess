@@ -21,8 +21,6 @@ class Player < ActiveRecord::Base
 
   before_save :set_fide_id, if: proc {|player| player.fide_id.nil?}
 
-
-
   def highest_rating
     highest = get_highest_rating
     return '-' unless highest
