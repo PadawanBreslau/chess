@@ -51,7 +51,6 @@ class Player < ActiveRecord::Base
     "#{name}, #{surname}"
   end
 
-
 private
 
   def set_fide_id

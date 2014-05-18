@@ -22,11 +22,11 @@ validates :about_me, allow_blank: true, length: {minimum: 1, maximum: 256}
   end
 
   def online?
-    last_active_at > 120.seconds.ago
+    last_active_at && last_active_at > 120.seconds.ago
   end
 
   def recently_online?
-    last_active_at > 15.minutes.ago && !online?
+    last_active_at && last_active_at > 15.minutes.ago && !online?
   end
 
   def online_icon_name

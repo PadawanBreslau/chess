@@ -40,6 +40,13 @@ class PlayersController < ApplicationController
     redirect_to players_path
   end
 
+  def statistics
+    @players = Player.all
+    @prepared_international_title_hash = Player.get_players_titles
+    @prepared_ratings_hash = Player.get_players_ratings
+    @prepared_gamecount_hash = Player.get_games_number
+  end
+
   private
 
   def player_params

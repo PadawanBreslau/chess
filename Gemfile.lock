@@ -32,6 +32,7 @@ GEM
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
     cancancan (1.7.1)
+    chartkick (1.2.4)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
@@ -64,6 +65,8 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    groupdate (2.1.1)
+      activerecord (>= 3.0.0)
     haml (4.0.3)
       tilt
     has_scope (0.6.0.rc)
@@ -190,10 +193,12 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on
   cancancan
+  chartkick
   coffee-rails (~> 4.0.0)
   debugger
   devise
   factory_girl_rails
+  groupdate
   haml
   inherited_resources
   jbuilder (~> 1.2)

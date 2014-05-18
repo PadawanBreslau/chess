@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   #check_authorization
 
   rescue_from CanCan::AccessDenied do |exception|
+    ER_LOG.error exception.message
+    ER_LOG.error exception.backtrace
     redirect_to root_url, :alert => exception.message
   end
 

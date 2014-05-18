@@ -1,22 +1,15 @@
 # -*- encoding : utf-8 -*-
 Chess::Application.routes.draw do
-  get "players/show"
-  get "players/index"
-  get "players/new"
-  get "players/create"
-  get "players/edit"
-  get "players/update"
-  get "players/destroy"
-  get "site_user_informations/show"
-  get "site_user_informations/edit"
-  get "site_user_informations/update"
-  get "site_user_informations/destroy"
   devise_for :site_users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
   root to: 'blog_entries#index'
+
+  resources :players do
+    collection do
+      get 'statistics'
+    end
+  end
 
   resources :blog_entries, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :site_users, :only => ["index","show","update","create","destroy", "new", "edit"]
@@ -40,5 +33,4 @@ Chess::Application.routes.draw do
       get 'games'
     end
   end
-
 end
