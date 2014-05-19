@@ -21,6 +21,7 @@ class Ability
       can :read, SiteUserInformation
     else
       can [:statistics, :player_stats], Player
+      can [:statistics, :user_stats], SiteUser
       can :read, :all
     end
   end

@@ -1,0 +1,11 @@
+%div.users_charts
+  %div.comments_chart
+    = t('comments')
+    = column_chart (@users_comments), height: "400px"
+  %div.games_chart
+    = t('games')
+    = column_chart (@users_ratings), height: "400px"
+  %div.user_birthdays
+    = t('birthdays')
+    = pie_chart @users_birthdays
+

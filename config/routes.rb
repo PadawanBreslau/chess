@@ -15,6 +15,16 @@ Chess::Application.routes.draw do
     end
   end
 
+  resources :site_users do
+    collection do
+      get 'statistics'
+    end
+
+    member do
+      get 'user_stats'
+    end
+  end
+
   resources :blog_entries, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :site_users, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :site_user_informations, :only => ["index","show","update","create","destroy", "new", "edit"]

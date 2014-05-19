@@ -1,4 +1,5 @@
 class SiteUser < ActiveRecord::Base
+  include UserHelper
   ROLES = %w[admin moderator player common_user suspended banned]
 
   devise :database_authenticatable, :registerable,
