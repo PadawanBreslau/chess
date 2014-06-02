@@ -9,6 +9,12 @@
 
 #SiteUsers
 user = SiteUser.create! email: 'st.zawadzki@gmail.com', password: 'admin1', password_confirmation: 'admin1', role: 'admin'
+SiteUser.create! email: 'st.zawadzki2@gmail.com', password: 'admin1', password_confirmation: 'admin1', role: 'admin'
+SiteUser.create! email: 'st.zawadzki3@gmail.com', password: 'admin1', password_confirmation: 'admin1', role: 'admin'
+SiteUser.create! email: 'st.zawadzki4@gmail.com', password: 'admin1', password_confirmation: 'admin1', role: 'admin'
+
+
+#SiteUserInfo
 
 
 

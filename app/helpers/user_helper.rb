@@ -38,6 +38,13 @@ module UserHelper
 
 
     def get_user_reputation
+      reputation = Hash.new(0)
+      user_reputations = SiteUser.all.map{|user| user.reputation }
+      (-5..4).each do |n|
+        reputation["#{n*20} - #{(n+1)*20}"] =
+        user_reputations.select{|rep| rep > (n*20) && rep < ((n+1)*20) }.count
+      end
+      reputation
     end
 
 

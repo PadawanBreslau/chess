@@ -2,10 +2,13 @@
   %div.comments_chart
     = t('comments')
     = column_chart (@users_comments), height: "400px"
-  %div.games_chart
-    = t('games')
+  %div.ratings_chart
+    = t('ratings')
     = column_chart (@users_ratings), height: "400px"
   %div.user_birthdays
     = t('birthdays')
     = pie_chart @users_birthdays
+  %div.reputation_chart
+    = t('reputation')
+    = column_chart (@users_reputation), height: "400px"
 
