@@ -21,6 +21,8 @@ gem 'factory_girl_rails', :group => [:development, :test]
 gem 'debugger', :group => [:development, :test]
 gem "paperclip", "~> 3.0"
 gem 'simplecov', :require => false, :group => :test
+gem 'countries'
+gem 'country_select'
 
 #View
 gem 'haml'

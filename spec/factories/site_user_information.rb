@@ -6,6 +6,6 @@ FactoryGirl.define do
     name "Name"
     surname "Surname"
     nick "GraveDigger"
-    country "USA"
+    country_code "us"
   end
 end

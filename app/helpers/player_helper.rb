@@ -91,5 +91,11 @@ module PlayerHelper
       Statistic.create!(name: 'games_number', value: games_result.inspect)
     end
 
+    def get_countries
+      Statistic.find_by_name('players_countries').try(:destroy)
+      players_countries = {"US" => 44, "BR" => 21, "PL" => 123, 'RU' => 43, 'Germany' => 177}
+      Statistic.create!(name: 'players_countries', value: players_countries.inspect)
+    end
+
   end
 end

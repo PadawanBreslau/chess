@@ -24,13 +24,13 @@ Aliquam eget lacus interdum, tempus augue volutpat, dapibus eros. Nullam ut pell
 
 BlogEntry.create! site_user: user, title: 'Lorem ipsum', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies condimentum porta. Fusce at magna at dui pulvinar molestie. Quisque pulvinar lectus lacus, ut dignissim nibh placerat ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas suscipit congue mi, a vehicula nisi. Nullam lorem libero, auctor vitae tempus a, congue vel urna. Vivamus tempor magna a turpis malesuada, quis hendrerit mi sagittis. In placerat neque eget mauris tincidunt viverra. In vestibulum, ipsum vitae posuere dictum, metus leo bibendum nisi, et lobortis nisl mi quis velit. Aliquam et mattis felis. In vehicula aliquam luctus.'
 
-player1 = Player.create!(name: 'Adam', surname: 'Adamski', fide_id: 999, title: 'IM', gender: 'M', country: 'POL')
+player1 = Player.create!(name: 'Adam', surname: 'Adamski', fide_id: 999, title: 'IM', gender: 'M', country_code: 'POL')
 
-player2 = Player.create!(name: 'Bogdan', surname: 'Bosacki', fide_id: 1000, title: 'FM', gender: 'M', country: 'POL')
+player2 = Player.create!(name: 'Bogdan', surname: 'Bosacki', fide_id: 1000, title: 'FM', gender: 'M', country_code: 'POL')
 
-player3 = Player.create!(name: 'Colin', surname: 'Curtis', fide_id: 1010, country: 'USA')
+player3 = Player.create!(name: 'Colin', surname: 'Curtis', fide_id: 1010, country_code: 'USA')
 
-player4 = Player.create!(name: 'Darren', surname: 'Davis', fide_id: 1012, country: 'GBR')
+player4 = Player.create!(name: 'Darren', surname: 'Davis', fide_id: 1012, country_code: 'GBR')
 
 event = (Event.create! event_name: 'Event')
 

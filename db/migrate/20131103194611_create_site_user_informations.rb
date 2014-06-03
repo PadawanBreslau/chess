@@ -7,7 +7,7 @@ class CreateSiteUserInformations < ActiveRecord::Migration
       t.string  :nick
       t.date    :date_of_birth
       t.float   :reputation, default: 0.0
-      t.string  :country
+      t.string  :country_code
 
       t.timestamps
     end

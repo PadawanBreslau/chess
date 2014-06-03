@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 20140518163907) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
-    t.string   "country"
+    t.string   "country_code"
     t.string   "gender"
     t.boolean  "active"
     t.string   "title"
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 20140518163907) do
     t.string   "nick"
     t.date     "date_of_birth"
     t.float    "reputation",     default: 0.0
-    t.string   "country"
+    t.string   "country_code"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "last_active_at"

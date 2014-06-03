@@ -16,7 +16,7 @@ describe SiteUserInformation do
       FactoryGirl.build(:site_user_information, nick: nil).should be_valid
       FactoryGirl.build(:site_user_information, nick: "a").should be_valid
       FactoryGirl.build(:site_user_information, nick: "a"*25).should_not be_valid
-      FactoryGirl.build(:site_user_information, country: nil).should be_valid
+      FactoryGirl.build(:site_user_information, country_code: nil).should be_valid
       FactoryGirl.build(:site_user_information, reputation: 10.0).should be_valid
       FactoryGirl.build(:site_user_information, reputation: 100.1).should_not be_valid
       FactoryGirl.build(:site_user_information, date_of_birth: Date.today).should_not be_valid

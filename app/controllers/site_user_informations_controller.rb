@@ -1,7 +1,6 @@
 class SiteUserInformationsController < ApplicationController
   load_and_authorize_resource param_method: :site_user_information_params
 
-
   def show
     @site_user_information = SiteUserInformation.find(params[:id])
   end
@@ -27,7 +26,7 @@ class SiteUserInformationsController < ApplicationController
   private
 
   def site_user_information_params
-    params.require(:site_user_information).permit(:site_user, :name, :surname, :nick, :date_of_birth, :reputation, :country, :rating, :about_me)
+    params.require(:site_user_information).permit(:site_user, :name, :surname, :nick, :date_of_birth, :reputation, :country_code, :rating, :about_me)
   end
 
 

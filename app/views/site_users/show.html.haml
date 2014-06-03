@@ -5,7 +5,7 @@
   %div.name
     - if @site_user.name.present? && @site_user.surname.present?
       = "#{@site_user.name}  #{@site_user.surname}"
-      = "(#{@site_user.country_code})" if @site_user.country
+      = "(#{@site_user.country})" if @site_user.country
     - else
       = @site_user.email
   %div.edit_user_info

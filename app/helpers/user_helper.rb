@@ -47,6 +47,11 @@ module UserHelper
       reputation
     end
 
+    def get_user_countries
+      countries = Hash.new(0)
+
+    end
+
 
     def get_recent_activities
     end
