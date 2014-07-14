@@ -6,7 +6,7 @@
   - g.column name: t('surname'), attribute: 'surname' do |player|
     - link_to player.surname, player_path(player)
   - g.column name: t('fide_id'), attribute: 'fide_id'
-  - g.column name: t('country'), attribute: 'country'
+  - g.column name: t('country'), attribute: 'country_code'
   - g.column name: t('gender'), attribute: 'gender'
   - g.column name: t('title'), attribute: 'title', custom_filter: {'GM' => 'GM', 'IM' => 'IM', 'WGM' => 'WGM', 'WIM' => 'WIM', 'FM' => 'FM', 'CM' => 'CM'}
   - g.column name: t('current_rating') do |player|

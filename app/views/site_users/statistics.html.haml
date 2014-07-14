@@ -11,4 +11,6 @@
   %div.reputation_chart
     = t('reputation')
     = column_chart (@users_reputation), height: "400px"
-
+  %div.countries_chart
+    = t('countries')
+    = geo_chart(@user_countries)

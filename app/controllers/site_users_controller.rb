@@ -10,11 +10,12 @@ class SiteUsersController < ApplicationController
   end
 
   def statistics
-    @users_comments = SiteUser.get_users_comments
-    @users_ratings = SiteUser.get_user_ratings
-    @users_birthdays = SiteUser.get_user_birthdays
-    @users_reputation = SiteUser.get_user_reputation
-    @users_recent_activity = SiteUser.get_recent_activities
+    @users_comments = Statistic.find_by_name("users_comments").to_hash
+    @users_ratings = Statistic.find_by_name("users_ratings").to_hash
+    @users_birthdays = Statistic.find_by_name("users_birthdays").to_hash
+    @users_reputation = Statistic.find_by_name("users_reputations").to_hash
+    @user_countries = Statistic.find_by_name("users_countries").to_hash
+    #@users_recent_activity = Statistic.find_by_name("users_activities").to_hash
   end
 
   def user_stats

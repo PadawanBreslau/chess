@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 20140518163907) do
 
   create_table "statistics", force: true do |t|
     t.string   "name"
-    t.string   "value"
+    t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

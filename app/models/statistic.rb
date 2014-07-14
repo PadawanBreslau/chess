@@ -12,7 +12,18 @@ class Statistic < ActiveRecord::Base
       Player.get_players_ratings
       Player.get_games_number
       Player.get_countries
-      ST_LOG.info "Finished generating statistics"
+      ST_LOG.info "Finished generating statistics for players"
+    end
+  end
+
+  def self.generate_users_statistics
+    ActiveRecord::Base.transaction do
+      SiteUser.get_user_countries
+      SiteUser.get_users_comments
+      SiteUser.get_user_ratings
+      SiteUser.get_user_birthdays
+      SiteUser.get_user_reputations
+      ST_LOG.info "Finished generating statistics for users"
     end
   end
 

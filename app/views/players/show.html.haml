@@ -5,7 +5,7 @@
   %div.name
     - if @player.name.present? && @player.surname.present?
       = "#{@player.name}  #{@player.surname}"
-      = "(#{@player.country})" if @player.country
+      = "(#{Country.find_country_by_alpha3(@player.country_code).try(:name)})" if @player.country_code
   %div.edit_player
     = link_to t('edit'), edit_player_path(@player) if can? :edit, @player
   %div.personal_info

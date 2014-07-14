@@ -77,8 +77,9 @@ def self.add_players_to_database
     title = node.xpath('.//title').children.text
     next if Player.find_by_fide_id(fide_id).present? || title.blank?
     begin
-      Player.create!(name: name, surname: surname, fide_id: fide_id, country: country, gender: gender, active: active, title: title)
-    rescue StandardError
+      Player.create!(name: name, surname: surname, fide_id: fide_id, country_code: country, gender: gender, active: active, title: title)
+    rescue StandardError => e
+      ER_LOG.info e.message
       ER_LOG.info("Could not create new player")
     end
   end
@@ -92,7 +93,8 @@ def self.add_rating_info_to_players(year, month)
     next unless Player.find_by_fide_id(fide_id).present?
     begin
       FideRating.create!(rating: rating, fide_id: fide_id, year: year+2000, month: month, games: games)
-    rescue StandardError
+    rescue StandardError => e
+      ER_LOG.info e.message
       ER_LOG.info("Could not create new rating - already in DB: #{fide_id} #{month}/#{year}")
       next
     end

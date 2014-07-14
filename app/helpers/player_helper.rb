@@ -93,7 +93,8 @@ module PlayerHelper
 
     def get_countries
       Statistic.find_by_name('players_countries').try(:destroy)
-      players_countries = {"US" => 44, "BR" => 21, "PL" => 123, 'RU' => 43, 'Germany' => 177}
+      players_countries_short = Player.group(:country_code).count.select{ |_,v| v > Player.count/200 }
+      players_countries = Hash[players_countries_short.map {|k, v| [Country.find_country_by_alpha3(k).try(:name), v] }]
       Statistic.create!(name: 'players_countries', value: players_countries.inspect)
     end
 
