@@ -7,6 +7,8 @@
     - link_to user.surname, user.site_user if user.surname
   - g.column name: t('nickname'), attribute: 'nick' do |user|
     - link_to user.nick, user.site_user if user.nick
+  - g.column name: t('email') do |user|
+    - link_to user.site_user.email, user.site_user if user.site_user.email
   - g.column name: t('rating'), attribute: 'rating', filter_type: :range, html: {style: 'text-align: center'}
   - g.column name: t('date_of_birth'), attribute: 'date_of_birth'
   - g.column name: t('reputation'), attribute: 'reputation', filter_type: :range, html: {style: 'text-align: center'}

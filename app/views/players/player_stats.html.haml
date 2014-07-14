@@ -1,12 +1,13 @@
 %div.player_charts
   %div.rating_chart
     = t('ratings')
-    = line_chart (@player_ratings), height: "400px", discrete: true, min: @player.get_lowest_rating.rating - 100
+    - if @player.fide_ratings.present?
+      = line_chart (@player_ratings), height: "400px", discrete: true, min: @player.get_lowest_rating.rating - 100
   %div.games_chart
     = t('games')
     = column_chart (@player_activities), height: "400px", discrete: true
   %div.titles_chart
-    = t('titles')
+    = t('colours')
     = pie_chart(@player_games_colors)
   %div.results_chart
     = t('titles')

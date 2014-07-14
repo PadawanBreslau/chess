@@ -15,7 +15,11 @@
       = t('player.rating') + ': ' + @player.current_rating.to_s if @player.current_rating.present?
     %div.personal_info_field
       = t('player.highest_rating') + ': ' + @player.highest_rating.to_s if @player.highest_rating.present?
-
+  %div.fide_data
+    %div.link_to_profile
+      = link_to t('fide_profile'), "http://ratings.fide.com/card.phtml?event=#{@player.fide_id}"
+    %div.link_to_games
+      = link_to t('fide_games'), "http://ratings.fide.com/view_games.phtml?id=#{@player.fide_id}"
 
 %div.player_tournaments
   = t('player.games')
@@ -25,6 +29,8 @@
         = tournament.first
       %div.games
         - tournament.last.each do |game|
-          = Player.find_by_id(game.white_player_id).to_name
-          = Player.find_by_id(game.black_player_id).to_name
-          = game.chess_result
+          %div.game
+            = Player.find_by_id(game.white_player_id).to_name
+            = game.chess_result
+            = Player.find_by_id(game.black_player_id).to_name
+
