@@ -1,8 +1,6 @@
 # -*- encoding : utf-8 -*-
 Chess::Application.routes.draw do
   devise_for :site_users
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
   root to: 'blog_entries#index'
 
   resources :players do
@@ -35,7 +33,7 @@ Chess::Application.routes.draw do
   resources :events, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :tournaments, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :rounds, :only => ["show","create", "new", "index", "update", "edit", "destroy"]
-  resources :games, :only => ["show","create", "new", "index", "update", "edit", "destroy"]
+  resources :chess_games, :only => ["show","create", "new", "index", "update", "edit", "destroy"]
   resources :articles, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :site_comments, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :rates, :only => ["edit"]
@@ -45,6 +43,8 @@ Chess::Application.routes.draw do
     member do
       get 'results'
       get 'games'
+      get 'upload_games'
+      post 'import_games'
     end
   end
 end

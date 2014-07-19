@@ -17,7 +17,7 @@ describe Round do
     #   games = []
     #   round = FactoryGirl.create(:round)
     #   5.times do
-    #     games << FactoryGirl.create(:game_with_random_players)
+    #     games << FactoryGirl.create(:chess_game_with_random_players)
     #   end
     #   round.games = games
     #   players = round.players
@@ -30,16 +30,16 @@ describe Round do
     it 'should create round with games and players' do
       games = []
       5.times do
-        games << FactoryGirl.create(:game_with_random_players)
+        games << FactoryGirl.create(:chess_game_with_random_players)
       end
       (round = FactoryGirl.build(:round_with_games)).should be_valid
-      round.games.should be_empty
+      round.chess_games.should be_empty
       (round = FactoryGirl.create(:round)).should be_valid
-      round.games = games
-      round.games.should_not be_empty
-      round.games.count.should eql 5
+      round.chess_games = games
+      round.chess_games.should_not be_empty
+      round.chess_games.count.should eql 5
 
-      round.games.each do |game|
+      round.chess_games.each do |game|
         game.white_player.should_not be_nil
         game.black_player.should_not be_nil
       end

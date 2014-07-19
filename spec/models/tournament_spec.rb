@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Tournament do
   def create_game(player1, player2, round,result)
-    Game.create!(white_player: player1, white_player_id: player1.id , black_player: player2, black_player_id: player2.id, round: round, result: result)
+    ChessGame.create!(white_player: player1, white_player_id: player1.id , black_player: player2, black_player_id: player2.id, round: round, result: result)
   end
 
   context 'creating tournaments' do
@@ -62,15 +62,15 @@ describe Tournament do
 
   context 'tournament should have games through rounds' do
     it 'should have no games if no rounds' do
-      FactoryGirl.create(:tournament).games.should be_empty
+      FactoryGirl.create(:tournament).chess_games.should be_empty
     end
 
     it 'should not have games if rounds present, but without games' do
-      FactoryGirl.create(:tournament_with_rounds).games.should be_empty
+      FactoryGirl.create(:tournament_with_rounds).chess_games.should be_empty
     end
 
     it 'should have games if rounds present with rounds' do
-      FactoryGirl.create(:tournament_with_rounds_and_games).games.should_not be_empty
+      FactoryGirl.create(:tournament_with_rounds_and_games).chess_games.should_not be_empty
     end
   end
 
@@ -90,13 +90,13 @@ describe Tournament do
       @tournament.players.should eq [@player1, @player2]
     end
 
-    it 'should create a Result object after adding a Game' do
-      expect{Game.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)}.to change(Result, :count).from(0).to(2)
+    it 'should create a Result object after adding a ChessGame' do
+      expect{ChessGame.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)}.to change(Result, :count).from(0).to(2)
       Result.count.should eq 2
     end
 
     it 'should fill all data in result' do
-      expect{Game.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)}.not_to raise_error
+      expect{ChessGame.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)}.not_to raise_error
       player1_result = @player1.results.first
       player2_result = @player2.results.first
 
@@ -116,8 +116,8 @@ describe Tournament do
     it 'should fill all data in result - 2' do
       @round2 = FactoryGirl.create(:round, tournament: @tournament)
       @tournament.reload
-      Game.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)
-      Game.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.second, result: 2)
+      ChessGame.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)
+      ChessGame.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.second, result: 2)
       player1_result = @player1.results.first
       player2_result = @player2.results.first
 
@@ -138,9 +138,9 @@ describe Tournament do
       @round2 = FactoryGirl.create(:round, tournament: @tournament)
       @round3 = FactoryGirl.create(:round, tournament: @tournament)
       @tournament.reload
-      Game.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)
-      Game.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.second, result: 2)
-      Game.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.last, result: 1)
+      ChessGame.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)
+      ChessGame.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.second, result: 2)
+      ChessGame.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.last, result: 1)
       player1_result = @player1.results.first
       player2_result = @player2.results.first
 

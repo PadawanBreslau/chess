@@ -37,16 +37,16 @@ event = (Event.create! event_name: 'Event')
 tournament = Tournament.create!(tournament_name: 'Amsterdam cup', round_number: 3, event: event, tournament_start: Date.today + 100.days, tournament_finish: Date.today + 102.days)
 
 # 1st round
-Game.create!(white_player: player1, black_player: player2, white_player_id: player1.id, black_player_id: player2.id, result: 2, round: tournament.rounds.first)
+ChessGame.create!(white_player: player1, black_player: player2, white_player_id: player1.id, black_player_id: player2.id, result: 2, round: tournament.rounds.first)
 
-Game.create!(white_player: player3, black_player: player4, white_player_id: player3.id, black_player_id: player4.id, result: 1, round: tournament.rounds.first)
+ChessGame.create!(white_player: player3, black_player: player4, white_player_id: player3.id, black_player_id: player4.id, result: 1, round: tournament.rounds.first)
 
 #2nd round
-Game.create!(white_player: player1, black_player: player4, white_player_id: player1.id, black_player_id: player4.id, result: 3, round: tournament.rounds.second)
+ChessGame.create!(white_player: player1, black_player: player4, white_player_id: player1.id, black_player_id: player4.id, result: 3, round: tournament.rounds.second)
 
-Game.create!(white_player: player2, black_player: player3, white_player_id: player2.id, black_player_id: player3.id, result: 2, round: tournament.rounds.second)
+ChessGame.create!(white_player: player2, black_player: player3, white_player_id: player2.id, black_player_id: player3.id, result: 2, round: tournament.rounds.second)
 
 #3rd
-Game.create!(white_player: player1, black_player: player3, white_player_id: player1.id, black_player_id: player3.id, result: 4, round: tournament.rounds.last)
+ChessGame.create!(white_player: player1, black_player: player3, white_player_id: player1.id, black_player_id: player3.id, result: 4, round: tournament.rounds.last)
 
-Game.create!(white_player: player2, black_player: player4, white_player_id: player2.id, black_player_id: player4.id, result: 1, round: tournament.rounds.last)
+ChessGame.create!(white_player: player2, black_player: player4, white_player_id: player2.id, black_player_id: player4.id, result: 1, round: tournament.rounds.last)

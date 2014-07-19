@@ -1,0 +1,5 @@
+= "Select games to import"
+
+= form_for(@tournament, multipart: true, url: {action: 'import_games'}, method: :post) do |f|
+  = f.file_field :pgn_file
+  = f.submit

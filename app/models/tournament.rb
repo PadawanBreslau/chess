@@ -1,11 +1,12 @@
 class Tournament < ActiveRecord::Base
   include ResultHelper
+  include TournamentHelper
 
   NAME_REGEX = /[a-zA-Z\s]+/
   URL_REGEX = /((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/ix
 
   has_many :rounds
-  has_many :games, through: :rounds
+  has_many :chess_games, through: :rounds
   belongs_to :event
   has_many :site_comments, as: :commentable, dependent: :destroy
   has_many :results

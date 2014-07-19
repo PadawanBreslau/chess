@@ -59,6 +59,11 @@ module PlayerHelper
 
   module ClassMethods
 
+    def find_or_create_player_by_string(player_string)
+      # TODO
+      Player.all.sample(1).first
+    end
+
     def get_players_titles
       Statistic.find_by_name('players_titles').try(:destroy)
       mappings = {"GM" => "Grandmaster", "IM" => "International Master", "WGM" => "Women Grandmaster", "WIM" => "Women International Master", "FM" => "Fide Master", "WFM" => "Women Fide Master", "CM" => "Candidate for Master", "WCM" => "Women Candidate for Master", nil => "No title"}

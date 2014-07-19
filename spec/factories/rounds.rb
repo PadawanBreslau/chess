@@ -6,7 +6,7 @@ FactoryGirl.define do
     factory :round_with_games do
       after(:create) do |round, _|
         5.times do
-          FactoryGirl.create(:game, round: round)
+          FactoryGirl.create(:chess_game, round: round)
         end
       end
     end

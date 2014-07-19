@@ -9,8 +9,8 @@ class Player < ActiveRecord::Base
   has_attached_file :photo, styles: { medium: "400x400>", thumb: "80x80>" }, default_url: "/images/:style/example_player.png", url: "/assets/photos/:id/:style/:basename.:extension", path: ":rails_root/public/assets/player_photos/:id/:style/:basename.:extension"
 
   has_many :fide_ratings, foreign_key: :fide_id, primary_key: :fide_id
-  has_many :white_games, class_name: 'Game', foreign_key: :white_player_id
-  has_many :black_games, class_name: 'Game', foreign_key: :black_player_id
+  has_many :white_games, class_name: 'ChessGame', foreign_key: :white_player_id
+  has_many :black_games, class_name: 'ChessGame', foreign_key: :black_player_id
   has_many :results
 
   validates :name, presence: true, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}, uniqueness: {scope: :surname}
@@ -35,7 +35,7 @@ class Player < ActiveRecord::Base
 
   def tournaments_with_games
     results = {}
-    games.each do |game|
+    chess_games.each do |game|
       tournament_name = game.round.tournament.tournament_name.to_sym
       results[tournament_name] = [] unless results.has_key?(tournament_name)
       results[tournament_name] << game
@@ -43,7 +43,7 @@ class Player < ActiveRecord::Base
     results
   end
 
-  def games
+    def chess_games
     white_games + black_games
   end
 

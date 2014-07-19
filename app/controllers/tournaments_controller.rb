@@ -18,6 +18,22 @@ class TournamentsController < InheritedResources::Base
     @results_grid = initialize_grid(@tournament.results(1000), per_page: 100)
   end
 
+  def upload_games
+    @tournament = Tournament.find(params[:id])
+  end
+
+  def import_games
+    @tournament = Tournament.find(params[:id])
+    pgn_file = params["tournament"]["pgn_file"]
+    begin
+      @tournament.parse_and_insert_from_pgn(pgn_file)
+    rescue StandardError => e
+      ER_LOG.info e.message
+      ER_LOG.info e.backtrace
+    end
+    redirect_to @tournament, notice: pgn_file.original_filename
+  end
+
 
 
   def permitted_params

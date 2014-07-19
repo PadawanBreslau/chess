@@ -5,11 +5,11 @@ module ResultHelper
     ActiveRecord::Base.transaction do
       RES_LOG.info "Clearing old results"
       results.destroy_all
-      games.reload
+      chess_games.reload
 
       @progress_helper = {}
 
-      games.each do |game|
+      chess_games.each do |game|
         white_result = Result.find_or_create_by(tournament_id: id, player_id: game.white_player.id)
         black_result = Result.find_or_create_by(tournament_id: id, player_id: game.black_player.id)
         update_results(white_result, black_result, game.result)
@@ -17,7 +17,7 @@ module ResultHelper
 
       @bucholtz_helper = {}
 
-      games.each do |game|
+      chess_games.each do |game|
         white_result = Result.find_or_create_by(tournament_id: id, player_id: game.white_player.id)
         black_result = Result.find_or_create_by(tournament_id: id, player_id: game.black_player.id)
         @bucholtz_helper[white_result.id.to_s.to_sym] = {} unless @bucholtz_helper[white_result.id.to_s.to_sym]

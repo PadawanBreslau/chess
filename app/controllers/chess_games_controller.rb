@@ -1,4 +1,4 @@
-class GamesController < InheritedResources::Base
+class ChessGamesController < InheritedResources::Base
   load_and_authorize_resource param_method: :permitted_params
 
   actions :all, except: []

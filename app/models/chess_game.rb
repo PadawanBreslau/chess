@@ -1,4 +1,4 @@
-class Game < ActiveRecord::Base
+class ChessGame < ActiveRecord::Base
 
   RESULTS = [nil, '1-0','1/2','0-1', '*']
 

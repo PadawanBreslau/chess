@@ -30,8 +30,8 @@ describe Event do
       expect{@ev = FactoryGirl.create(:event_with_tournaments_and_rounds_and_games)}.not_to raise_error
       @ev.tournaments.count.should eql 5
       @ev.rounds.count.should eql 25
-      @ev.games.should_not be_empty
-      @ev.games.count.should eql 125
+      @ev.chess_games.should_not be_empty
+      @ev.chess_games.count.should eql 125
     end
   end
 end

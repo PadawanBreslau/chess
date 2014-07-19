@@ -51,6 +51,17 @@ ActiveRecord::Schema.define(version: 20140518163907) do
     t.datetime "photo_updated_at"
   end
 
+  create_table "chess_games", force: true do |t|
+    t.datetime "date"
+    t.integer  "white_player_id"
+    t.integer  "black_player_id"
+    t.integer  "result"
+    t.string   "eco"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "round_id"
+  end
+
   create_table "events", force: true do |t|
     t.string   "event_name"
     t.string   "url"
@@ -67,17 +78,6 @@ ActiveRecord::Schema.define(version: 20140518163907) do
     t.integer "year"
     t.integer "month"
     t.integer "games"
-  end
-
-  create_table "games", force: true do |t|
-    t.datetime "date"
-    t.integer  "white_player_id"
-    t.integer  "black_player_id"
-    t.integer  "result"
-    t.string   "eco"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "round_id"
   end
 
   create_table "players", force: true do |t|
