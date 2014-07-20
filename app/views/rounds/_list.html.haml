@@ -13,6 +13,6 @@
       - g.column name: t('round.round_date'), attribute: 'date' do |round|
         - short_date(round.date)
       - g.column name: t('round.game_count') do |round|
-        - round.games.count
+        - round.chess_games.count
       - g.column name: t('round.games') do |round|
-        - link_to t('round.watch_games'), games_path(round_id: round.id)
+        - link_to t('round.watch_games'), chess_games_path(round_id: round.id)

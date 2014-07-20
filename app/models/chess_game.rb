@@ -8,6 +8,7 @@ class ChessGame < ActiveRecord::Base
 
   has_one :white_player, class_name: 'Player', primary_key: :white_player_id,  foreign_key: :id
   has_one :black_player, class_name: 'Player', primary_key: :black_player_id,  foreign_key: :id
+  has_many :chess_moves, dependent: :destroy
   belongs_to :round
 
   after_save :refresh_tournament_results

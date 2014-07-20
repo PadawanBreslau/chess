@@ -1,5 +1,8 @@
-#source 'https://rubygems.org'
 source 'https://bb-m.rubygems.org/'
+
+#Private gem
+
+gem 'byzantion_chess', '~> 0.0.2'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

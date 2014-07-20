@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140518163907) do
+ActiveRecord::Schema.define(version: 20140720163347) do
 
   create_table "article_photos", force: true do |t|
     t.integer  "article_id"
@@ -60,6 +60,16 @@ ActiveRecord::Schema.define(version: 20140518163907) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "round_id"
+  end
+
+  create_table "chess_moves", force: true do |t|
+    t.string   "move_number"
+    t.string   "move_notation"
+    t.integer  "level",         default: 0
+    t.integer  "previous_move"
+    t.integer  "chess_game_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", force: true do |t|
