@@ -1,0 +1,38 @@
+- @chess_move = @chess_game.chess_moves.first
+%div.game_header
+  = @chess_game.white_player.to_name
+  = '-'
+  = @chess_game.black_player.to_name
+  = @chess_game.chess_result
+%div.chessboard{id: "chessboard", style: "width: 400px; margin-top: 50px"}
+%div.move_manipulation
+  %input#startPosition{type: "button", value: "Start"}/
+  %input#moveBackward{type: "button", value: "<-"}/
+  %input#moveForward{type: "button", value: "->"}/
+%div.move_notation
+  - @chess_game.chess_moves.each_slice(2).with_index do |move_slice, i|
+    %div.move_slice
+    = i+1
+    - move_slice.each do |move|
+      %input#moveForward{type: "button", value: "#{move.move_notation}", fen: "#{move.fen_after}"}/
+
+
+:javascript
+
+  var cfg = {
+    showNotation: false,
+    position: 'start'
+  };
+  var chessboard = new ChessBoard('chessboard', cfg);
+  var move = '#{@chess_move.move_notation}'
+
+  $('#startPosition').on('click',chessboard.start);
+
+  $('#moveForward').on('click', function() {
+    chessboard.move(move);
+    move = '#{(@chess_move = @chess_move.next_move).move_notation}';
+  });
+
+  $('#moveBackward').on('click', function() {
+    chessboard.move('e4-e2');
+  });

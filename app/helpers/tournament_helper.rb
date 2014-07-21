@@ -1,5 +1,6 @@
 require 'active_support/concern'
 require 'pgn_parser'
+require 'byzantion_chess'
 
 module TournamentHelper
   extend ActiveSupport::Concern
@@ -40,8 +41,13 @@ module TournamentHelper
   def add_moves_to_game(game, moves)
     # TODO - only main game. Also - move number
     begin
+      board = ByzantionChess::Board.new
       moves["0"].each do |move|
-        ChessMove.create!(move_notation: move.to_s, level: 0, chess_game: game)
+
+        fen_before = board.writeFEN
+        move.execute(board)
+        fen_after = board.writeFEN
+        ChessMove.create!(move_notation: move.to_s, level: 0, chess_game: game, fen_before: fen_before, fen_after: fen_after)
       end
     rescue StandardError => e
       ER_LOG.info e.message
