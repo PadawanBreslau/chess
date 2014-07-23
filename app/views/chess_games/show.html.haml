@@ -1,4 +1,3 @@
-- @chess_move = @chess_game.chess_moves.first
 %div.game_header
   = @chess_game.white_player.to_name
   = '-'
@@ -24,15 +23,28 @@
     position: 'start'
   };
   var chessboard = new ChessBoard('chessboard', cfg);
-  var move = '#{@chess_move.move_notation}'
+  var moves = #{@chess_game.all_moves}
+  var reversed_moves = #{@chess_game.all_moves_reversed}
+  var counter = 0
 
-  $('#startPosition').on('click',chessboard.start);
+  $('#startPosition').on('click', function() {
+    chessboard.position('start', false);
+    counter = 0;
+  });
 
   $('#moveForward').on('click', function() {
-    chessboard.move(move);
-    move = '#{(@chess_move = @chess_move.next_move).move_notation}';
+    if(moves[counter] == 'e1-g1' && moves[counter+1] == 'h1-f1' || moves[counter] == 'e8-g8' && moves[counter+1] == 'h8-f8'
+    ){
+    chessboard.move(moves[counter], moves[++counter])
+    }
+    else
+    {
+    chessboard.move(moves[counter]);
+    }
+    counter++;
   });
 
   $('#moveBackward').on('click', function() {
-    chessboard.move('e4-e2');
+    counter--;
+    chessboard.move(moves[counter]);
   });

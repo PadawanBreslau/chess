@@ -43,11 +43,11 @@ module TournamentHelper
     begin
       board = ByzantionChess::Board.new
       moves["0"].each do |move|
-
         fen_before = board.writeFEN
+        piece = board.piece_from(move.to_s[0..1]).to_s
         move.execute(board)
         fen_after = board.writeFEN
-        ChessMove.create!(move_notation: move.to_s, level: 0, chess_game: game, fen_before: fen_before, fen_after: fen_after)
+        ChessMove.create!(move_notation: move.to_s, level: 0, chess_game: game, fen_before: fen_before, fen_after: fen_after, piece: piece)
       end
     rescue StandardError => e
       ER_LOG.info e.message

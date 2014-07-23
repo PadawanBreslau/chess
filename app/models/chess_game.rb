@@ -17,7 +17,23 @@ class ChessGame < ActiveRecord::Base
     RESULTS[self.result] || "?"
   end
 
+  def all_moves
+    chess_moves.map(&:get_move_string).flatten
+  end
+
+  def all_moves_reversed
+    reverse_move_notation(all_moves)
+  end
+
   private
+
+  def reverse_move_notation(all_moves)
+    all_moves.map{|m| reverse_move(m)}
+  end
+
+  def reverse_move(move_notation)
+    "#{move_notation[3..4]}-#{move_notation[0..1]}"
+  end
 
   def refresh_tournament_results
     RES_LOG.info "Refreshing tournament results after save: #{self.inspect}"
