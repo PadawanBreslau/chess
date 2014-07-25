@@ -14,7 +14,7 @@ class Player < ActiveRecord::Base
   has_many :results
 
   validates :name, presence: true, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}, uniqueness: {scope: :surname}
-  validates :middlename, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}, allow_nil: true
+  validates :middlename, format: { with: NAME_REGEX }, length: {minimum: 1, maximum: 32}, allow_nil: true
   validates :surname, presence: true, format: { with: NAME_REGEX }, length: {minimum: 2, maximum: 32}
   validates :fide_id, uniqueness: true, if: proc{|p| p.fide_id.present?}
   validates :photo, presence: false, attachment_content_type: { content_type: ["image/jpg","image/png"]}, attachment_size: { in: 0..3.megabytes }

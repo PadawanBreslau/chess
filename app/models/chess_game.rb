@@ -25,6 +25,14 @@ class ChessGame < ActiveRecord::Base
     reverse_move_notation(all_moves)
   end
 
+  def all_after_move_fens
+    chess_moves.map(&:fen_after)
+  end
+
+  def all_before_move_fens
+    chess_moves.map(&:fen_before)
+  end
+
   private
 
   def reverse_move_notation(all_moves)

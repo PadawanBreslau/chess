@@ -113,5 +113,23 @@ describe Player do
     end
   end
 
+  context 'find or create player' do
+    before do
+      @player = FactoryGirl.create(:player, name: 'Andy', surname: 'Warhol', middlename: nil)
+    end
+
+    it 'should find a plyaer if exists' do
+      Player.find_or_create_player_by_string("Warhol, Andy").should eql @player
+    end
+
+    it 'should add new player if not exists' do
+      expect{Player.find_or_create_player_by_string("Beaver, Barry")}.to change(Player, :count).by(1)
+    end
+
+    it 'should use middlename too' do
+      @player = FactoryGirl.create(:player, name: 'Cassey', surname: 'Cassiddy', middlename: 'C')
+    end
+  end
+
 end
 

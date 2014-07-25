@@ -8,24 +8,37 @@
   %input#startPosition{type: "button", value: "Start"}/
   %input#moveBackward{type: "button", value: "<-"}/
   %input#moveForward{type: "button", value: "->"}/
+  %input#flipBoard{type: "button", value: "Flip"}/
 %div.move_notation
   - @chess_game.chess_moves.each_slice(2).with_index do |move_slice, i|
     %div.move_slice
     = i+1
     - move_slice.each do |move|
-      %input#moveForward{type: "button", value: "#{move.move_notation}", fen: "#{move.fen_after}"}/
+      %input.moveSelection{type: "button", value: "#{move.piece}#{move.move_notation}", fen: "#{move.fen_after}"}/
 
 
 :javascript
 
+  var reloadVariations = function(){
+    //alert('Reload the variations now');
+    };
+
   var cfg = {
     showNotation: false,
-    position: 'start'
+    position: 'start',
+    onChange: reloadVariations
   };
+
   var chessboard = new ChessBoard('chessboard', cfg);
   var moves = #{@chess_game.all_moves}
   var reversed_moves = #{@chess_game.all_moves_reversed}
+  var fen_before = #{@chess_game.all_before_move_fens}
   var counter = 0
+  var max_counter = moves.length
+
+  $('#flipBoard').on('click', function() {
+    chessboard.flip();
+  });
 
   $('#startPosition').on('click', function() {
     chessboard.position('start', false);
@@ -46,5 +59,12 @@
 
   $('#moveBackward').on('click', function() {
     counter--;
-    chessboard.move(moves[counter]);
+    chessboard.position(fen_before[counter], false);
   });
+
+  $('.moveSelection').each(function(index) {
+    $(this).click(function() {
+      chessboard.position($(this).attr("fen"), false);
+    });
+  });
+

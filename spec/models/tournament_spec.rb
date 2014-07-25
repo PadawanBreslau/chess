@@ -258,4 +258,5 @@ describe Tournament do
       player3_result.avg_rating.should eq 2250.0
     end
   end
+
 end

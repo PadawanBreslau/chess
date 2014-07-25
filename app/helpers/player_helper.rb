@@ -62,7 +62,7 @@ module PlayerHelper
     def find_or_create_player_by_string(player_string)
       begin
         surname, name = player_string.split(',')
-        players_with_surname = Player.find_all_by_surname(surname)
+        players_with_surname = Player.where(surname: surname).all
         return players_with_surname.first if players_with_surname.size == 1
         players_with_name_and_surname = players_with_surname.select{|player| player.name == name}
         return players_with_name_and_surname.first if players_with_name_and_surname.size == 1
