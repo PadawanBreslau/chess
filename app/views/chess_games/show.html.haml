@@ -16,6 +16,12 @@
     - move_slice.each do |move|
       %input.moveSelection{type: "button", value: "#{move.piece}#{move.move_notation}", fen: "#{move.fen_after}"}/
 
+:css
+  .highlight-white {
+    -webkit-box-shadow: inset 0 0 3px 3px yellow;
+    -moz-box-shadow: inset 0 0 3px 3px yellow;
+    box-shadow: inset 0 0 3px 3px yellow;
+  }
 
 :javascript
 
@@ -30,11 +36,35 @@
   };
 
   var chessboard = new ChessBoard('chessboard', cfg);
-  var moves = #{@chess_game.all_moves}
-  var reversed_moves = #{@chess_game.all_moves_reversed}
-  var fen_before = #{@chess_game.all_before_move_fens}
-  var counter = 0
-  var max_counter = moves.length
+  var boardEl = $('#chessboard');
+  var moves = #{@chess_game.all_moves};
+  var reversed_moves = #{@chess_game.all_moves_reversed};
+  var fen_before = #{@chess_game.all_before_move_fens};
+  var counter = 0;
+  var max_counter = moves.length;
+  var move_from;
+  var move_to;
+  var squareClass = 'square-55d63';
+
+  $(document).keydown (function (e) {
+    var keyStroke = e.keyCode;
+    if(keyStroke == 39){
+      move_from = moves[counter].substring(0,2);
+      move_to = moves[counter].substring(3,5);
+
+      boardEl.find('.' + squareClass).removeClass('highlight-white');
+      boardEl.find('.square-' + move_from).addClass('highlight-white');
+      boardEl.find('.square-' + move_to).addClass('highlight-white');
+
+      counter++;
+      chessboard.position(fen_before[counter], false);
+    }
+    else if(keyStroke == 37)
+    {
+      counter--;
+      chessboard.position(fen_before[counter], false);
+    }
+  });
 
   $('#flipBoard').on('click', function() {
     chessboard.flip();
@@ -46,15 +76,15 @@
   });
 
   $('#moveForward').on('click', function() {
-    if(moves[counter] == 'e1-g1' && moves[counter+1] == 'h1-f1' || moves[counter] == 'e8-g8' && moves[counter+1] == 'h8-f8'
-    ){
-    chessboard.move(moves[counter], moves[++counter])
-    }
-    else
-    {
-    chessboard.move(moves[counter]);
-    }
+    move_from = moves[counter].substring(0,2);
+    move_to = moves[counter].substring(3,5);
+
+    boardEl.find('.' + squareClass).removeClass('highlight-white');
+    boardEl.find('.square-' + move_from).addClass('highlight-white');
+    boardEl.find('.square-' + move_to).addClass('highlight-white');
+
     counter++;
+    chessboard.position(fen_before[counter], false);
   });
 
   $('#moveBackward').on('click', function() {
