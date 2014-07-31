@@ -38,7 +38,6 @@
   var chessboard = new ChessBoard('chessboard', cfg);
   var boardEl = $('#chessboard');
   var moves = #{@chess_game.all_moves};
-  var reversed_moves = #{@chess_game.all_moves_reversed};
   var fen_before = #{@chess_game.all_before_move_fens};
   var counter = 0;
   var max_counter = moves.length;

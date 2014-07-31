@@ -31,7 +31,7 @@ class TournamentsController < InheritedResources::Base
       ER_LOG.info e.message
       ER_LOG.info e.backtrace
     end
-    redirect_to @tournament, notice: pgn_file.original_filename
+    redirect_to @tournament
   end
 
 

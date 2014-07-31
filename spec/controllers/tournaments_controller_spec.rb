@@ -31,6 +31,24 @@ describe TournamentsController do
     end
   end
 
+  context 'GET :results' do
+    it 'tournament results' do
+      tournament = FactoryGirl.create(:tournament)
+      get :results, id: tournament.id
+      assigns(:tournament).should eql tournament
+      assigns(:results_grid).should be_kind_of Wice::WiceGrid
+    end
+  end
+
+  context 'GET :upload_games' do
+    it 'should render upload_games' do
+      tournament = FactoryGirl.create(:tournament)
+      get :upload_games, id: tournament.id
+      assigns(:tournament).should eql tournament
+    end
+  end
+
+
   context 'POST #create' do
     before do
       @tournament = FactoryGirl.build(:tournament)
@@ -40,6 +58,16 @@ describe TournamentsController do
       expect{
           post :create, tournament: @tournament.attributes.symbolize_keys
         }.to change(Tournament,:count).from(0).to(1)
+    end
+  end
+
+  context 'POST #import_games' do
+    before do
+      @tournament = FactoryGirl.create(:tournament)
+    end
+
+    it 'creates uploads pgn' do
+      post :import_games, id: @tournament.id, tournament: {'pgn_file' => 'aaaaa'}
     end
   end
 

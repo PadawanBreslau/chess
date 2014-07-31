@@ -41,4 +41,27 @@ describe Game do
       game.black_player.surname.should eql "Beowulf"
     end
   end
+
+  context 'board methods' do
+    before do
+      @game = FactoryGirl.create(:chess_game)
+      @move1 =  FactoryGirl.create(:chess_move, move_number: 1, chess_game_id: @game.id, fen_before: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', fen_after: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', move_notation: 'e2-e4')
+      @move2 =  FactoryGirl.create(:chess_move, move_number: 1, chess_game_id: @game.id, fen_before: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR', fen_after: 'rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR', move_notation: 'e7-e6')
+    end
+
+    it 'should return all moves' do
+      @game.all_moves.should eql ['e2-e4', 'e7-e6']
+
+    end
+
+
+    it 'should return all after move fens' do
+      @game.all_after_move_fens.should eql ['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR','rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR']
+    end
+
+    it 'should return all before move fens' do
+      @game.all_before_move_fens.should eql ['rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR','rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR']
+    end
+
+  end
 end
