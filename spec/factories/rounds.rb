@@ -2,6 +2,7 @@
 FactoryGirl.define do
   factory :round do
     date Date.today - 10.days
+    sequence(:round_number) {|n| n+99}
 
     factory :round_with_games do
       after(:create) do |round, _|

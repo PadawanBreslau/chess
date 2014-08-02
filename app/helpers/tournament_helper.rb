@@ -29,13 +29,11 @@ module TournamentHelper
     end
   end
 
-  private
-
   def find_or_create_round(round_description, date)
     number = round_description.split('.').first.to_i
     matching_rounds = rounds.select{|r| r.round_number == number}
     return matching_rounds.first if matching_rounds.size == 1
-    Round.create!(tournament: self, round_number: number, date: date.to_datetime)
+    Round.create!(tournament: self, round_number: number, date: date.to_datetime) and self.reload
   end
 
   def add_moves_to_game(game, moves)

@@ -43,7 +43,7 @@ class Player < ActiveRecord::Base
     results
   end
 
-    def chess_games
+  def chess_games
     white_games + black_games
   end
 

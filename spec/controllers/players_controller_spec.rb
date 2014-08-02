@@ -23,6 +23,17 @@ describe PlayersController do
     end
   end
 
+  context 'POST #create' do
+    before do
+      @player = FactoryGirl.build(:player)
+    end
+
+    it 'creates a new site comment' do
+      expect { post :create, player: @player.attributes.symbolize_keys
+        }.to change(Player,:count).by(1)
+    end
+  end
+
 
   describe "GET 'edit'" do
     before do

@@ -96,7 +96,7 @@ module PlayerHelper
     def get_games_number
       Statistic.find_by_name('games_number').try(:destroy)
       games_result = Hash.new
-      players_games = Player.all.map{|pl| pl.games.count}
+      players_games = Player.all.map{|pl| pl.chess_games.count}
       (0..9).each do |n|
         games_result["#{n*20}-#{(n+1)*20}"] =
         players_games.select{|games| games >= (n*20) && games < (n+1)*20 }.count

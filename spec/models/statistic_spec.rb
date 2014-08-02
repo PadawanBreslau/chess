@@ -10,5 +10,15 @@ describe Statistic do
       FactoryGirl.create(:statistic)
       expect{FactoryGirl.create(:statistic)}.to raise_error
     end
+
+    it 'should run statistics raketasks - players' do
+      FactoryGirl.create(:player)
+      expect{Statistic.generate_players_statistics}.not_to raise_error
+    end
+
+    it 'should run statistics raketasks - site users' do
+      FactoryGirl.create(:site_user)
+      expect{Statistic.generate_users_statistics}.not_to raise_error
+    end
   end
 end

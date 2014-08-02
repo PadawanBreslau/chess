@@ -77,7 +77,7 @@ describe Tournament do
   context 'tournament_result' do
     before do
       @tournament = FactoryGirl.create(:tournament)
-      @round = FactoryGirl.create(:round, tournament: @tournament)
+      @round = FactoryGirl.create(:round, tournament: @tournament, round_number: 1)
       @tournament.reload
       @player1 = FactoryGirl.create(:player, fide_id: 123, name: 'Andy')
       @player2 = FactoryGirl.create(:player, fide_id: 321, name: 'Bert')
@@ -114,7 +114,7 @@ describe Tournament do
     end
 
     it 'should fill all data in result - 2' do
-      @round2 = FactoryGirl.create(:round, tournament: @tournament)
+      @round2 = FactoryGirl.create(:round, tournament: @tournament, round_number: 2)
       @tournament.reload
       ChessGame.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)
       ChessGame.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.second, result: 2)
@@ -135,8 +135,8 @@ describe Tournament do
     end
 
     it 'should fill all data in result - 3' do
-      @round2 = FactoryGirl.create(:round, tournament: @tournament)
-      @round3 = FactoryGirl.create(:round, tournament: @tournament)
+      @round2 = FactoryGirl.create(:round, tournament: @tournament, round_number: 2)
+      @round3 = FactoryGirl.create(:round, tournament: @tournament, round_number: 3)
       @tournament.reload
       ChessGame.create!(white_player: @player1, white_player_id: @player1.id , black_player: @player2, black_player_id: @player2.id, round: @tournament.rounds.first, result: 1)
       ChessGame.create!(white_player: @player2, white_player_id: @player2.id , black_player: @player1, black_player_id: @player1.id, round: @tournament.rounds.second, result: 2)
@@ -158,8 +158,8 @@ describe Tournament do
     end
 
     it 'should fill all data in result - 3' do
-      @round2 = FactoryGirl.create(:round, tournament: @tournament)
-      @round3 = FactoryGirl.create(:round, tournament: @tournament)
+      @round2 = FactoryGirl.create(:round, tournament: @tournament, round_number: 2)
+      @round3 = FactoryGirl.create(:round, tournament: @tournament, round_number: 3)
       @player3 = FactoryGirl.create(:player, fide_id: 456, name: 'Carl')
       @player4= FactoryGirl.create(:player, fide_id: 654, name: 'Darren')
       @tournament.reload
@@ -204,7 +204,7 @@ describe Tournament do
   context 'tournament_result - avg rating' do
     before do
       @tournament = FactoryGirl.create(:tournament)
-      @round = FactoryGirl.create(:round, tournament: @tournament)
+      @round = FactoryGirl.create(:round, tournament: @tournament, round_number: 6)
       @tournament.reload
       @player1 = FactoryGirl.create(:player, fide_id: 123, name: 'Andy')
       @player2 = FactoryGirl.create(:player, fide_id: 321, name: 'Bert')
@@ -257,6 +257,20 @@ describe Tournament do
       player2_result.avg_rating.should eq 2500.0
       player3_result.avg_rating.should eq 2250.0
     end
-  end
 
+    it 'should find or create rounds' do
+      expect{@tournament.send(:find_or_create_round, '4.1.2', Date.today)}.to change(Round, :count).from(1).to(2)
+    end
+
+    it 'should not create round if exists' do
+      expect{@tournament.send(:find_or_create_round, '4.1.2', Date.today)}.to change(Round, :count).from(1).to(2)
+      expect{@tournament.send(:find_or_create_round, '4.2', Date.today)}.not_to change(Round, :count)
+    end
+
+    it 'should not create round if not given or wrong type' do
+      expect{@tournament.send(:find_or_create_round, nil, Date.today)}.to raise_error(NoMethodError)
+      expect{@tournament.send(:find_or_create_round, 'wrong', Date.today)}.to raise_error(ActiveRecord::RecordInvalid)
+    end
+
+  end
 end
