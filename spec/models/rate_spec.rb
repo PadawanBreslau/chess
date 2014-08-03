@@ -304,10 +304,23 @@ describe Rate do
     it 'should count rate color' do
       rate = @site_comment.rate
       rate.color.should eql Rate::WHITE
+      rate.active("like", @site_user).should be_true
       rate.like(@site_user)
+      rate.active("like", @site_user).should be_false
       rate.color.should_not eql Rate::WHITE
       rate.color.should_not eql Rate::GREEN
       rate.color.should eql "#22e022"
+    end
+
+    it 'should count rate color-2' do
+      rate = @site_comment.rate
+      rate.color.should eql Rate::WHITE
+      rate.active("dislike", @site_user).should be_true
+      rate.dislike(@site_user)
+      rate.active("dislike", @site_user).should be_false
+      rate.color.should_not eql Rate::WHITE
+      rate.color.should_not eql Rate::RED
+      rate.color.should eql "#fe0000"
     end
 
 

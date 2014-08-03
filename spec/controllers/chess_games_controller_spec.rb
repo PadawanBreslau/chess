@@ -24,6 +24,14 @@ describe ChessGamesController do
       assigns(:chess_games).to_a.should eql [game]
     end
 
+    it 'populates a game' do
+      @tournament = FactoryGirl.create(:tournament)
+      @round = FactoryGirl.create(:round, tournament: @tournament, round_number: 1)
+      game = FactoryGirl.create(:chess_game_with_random_players, round: @round)
+      get :index, round_id: @round.id
+      assigns(:chess_games).to_a.should eql [game]
+    end
+
     it 'renders the :index view' do
       FactoryGirl.create(:chess_game_with_random_players)
       get :index

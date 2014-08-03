@@ -18,3 +18,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"
 end
+
+def create_game(player1, player2, round,result)
+  ChessGame.create!(white_player: player1, white_player_id: player1.id , black_player: player2, black_player_id: player2.id, round: round, result: result)
+end

@@ -65,9 +65,13 @@ describe Player do
     it 'should look for a player in FIDE database and assign fide_id to player' do
       player = FactoryGirl.create(:player, name: "Jolanta", surname: "Zawadzka")
       player.fide_id.should eql 1122320
+      player.to_name.should eql "Zawadzka, Jolanta"
+      player.tournaments_with_games.should be_empty
 
       player = FactoryGirl.create(:player, name: "Beata", surname: "Kądziołka")
       player.fide_id.should eql 1119990
+      player.to_name.should eql "Kądziołka, Beata"
+      player.tournaments_with_games.should be_empty
     end
 
     it 'should create player with photo attachment' do
@@ -96,8 +100,10 @@ describe Player do
   context 'highest fide rating' do
     it 'should return empty if no rating' do
       player = FactoryGirl.create(:player)
+      player.lowest_rating.should eq '-'
       player.highest_rating.should eq '-'
       player.current_rating.should eq '-'
+      player.get_player_ratings.should be_empty
     end
 
     it 'should return higest rating as higest an newest as current' do
@@ -107,9 +113,20 @@ describe Player do
       current = FactoryGirl.create(:fide_rating, fide_id: player.fide_id, rating: 2121, year: 2013, month: 2)
       player.get_highest_rating.should eq highest
       player.get_current_rating.should eq current
+      player.get_lowest_rating.should eq current
+
+      player.get_player_ratings.should_not be_empty
 
       player.highest_rating.should eq PlayerHelper::format_rating_output(highest.rating, highest.year, highest.month)
       player.current_rating.should eq PlayerHelper::format_rating_output(current.rating, current.year, current.month)
+    end
+
+    it 'should get player results' do
+      player = FactoryGirl.create(:player, fide_id: 97869)
+      player.get_player_results("white").should be_empty
+      player.get_player_results("black").should be_empty
+      player.get_player_results("wrong").should be_empty
+      player.get_player_activities.should be_empty
     end
   end
 
@@ -130,6 +147,7 @@ describe Player do
       @player = FactoryGirl.create(:player, name: 'Cassey', surname: 'Cassiddy', middlename: 'C')
     end
   end
+
 
 end
 

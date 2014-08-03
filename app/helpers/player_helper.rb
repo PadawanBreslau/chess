@@ -20,7 +20,7 @@ module PlayerHelper
   end
 
   def get_player_ratings
-    ratings = Hash.new
+    ratings = {}
     fide_ratings.each do |rating|
       ratings["#{rating.year}/#{rating.month}"] = rating.rating
     end

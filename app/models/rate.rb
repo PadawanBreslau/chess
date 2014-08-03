@@ -33,7 +33,7 @@ class Rate < ActiveRecord::Base
     self.general_rate += user.reputation * ratio
     self.dislikes -= 1 if revert
     self.save!
-    SiteUsersRate.find_or_create({:rate => self, :site_user => user})
+    SiteUsersRate.find_or_create({:rate => self, :site_user => user, rate_action: 'like'})
   end
 
   def dislike(user, revert=false)
@@ -43,7 +43,7 @@ class Rate < ActiveRecord::Base
     self.general_rate -= user.reputation * ratio
     self.likes -= 1 if revert
     self.save!
-    SiteUsersRate.find_or_create({:rate => self, :site_user => user})
+    SiteUsersRate.find_or_create({:rate => self, :site_user => user, rate_action: 'dislike'})
   end
 
   def active(action, user)

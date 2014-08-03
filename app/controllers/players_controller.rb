@@ -42,10 +42,10 @@ class PlayersController < ApplicationController
 
   def statistics
     @players = Player.all
-    @prepared_international_title_hash = Statistic.find_by_name("players_titles").to_hash
-    @prepared_ratings_hash = Statistic.find_by_name("players_ratings").to_hash
-    @prepared_gamecount_hash = Statistic.find_by_name("games_number").to_hash
-    @prepared_countries_hash = Statistic.find_by_name("players_countries").to_hash
+    @prepared_international_title_hash = Statistic.find_by_name("players_titles").try(:to_hash)
+    @prepared_ratings_hash = Statistic.find_by_name("players_ratings").try(:to_hash)
+    @prepared_gamecount_hash = Statistic.find_by_name("games_number").try(:to_hash)
+    @prepared_countries_hash = Statistic.find_by_name("players_countries").try(:to_hash)
   end
 
   def player_stats

@@ -32,7 +32,7 @@ class SiteUserInformation < ActiveRecord::Base
     if online?
       "online"
     elsif recently_online?
-      "recently_offline"
+      "recently_online"
     else
       "offline"
     end

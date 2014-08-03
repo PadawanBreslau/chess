@@ -30,7 +30,32 @@ describe SiteUserInformation do
       info = FactoryGirl.create(:site_user_information)
       info.last_active_at.should be_nil
     end
+
+    it 'should retutn fullname and nickname' do
+      user = FactoryGirl.create(:site_user_information, name: "Alan", surname: "Adams", nick: "ATeam")
+      user.fullname.should eql "Alan Adams"
+      user.nickname.should eql "ATeam"
+    end
 #TODO test logging
+  end
+
+  context 'online status' do
+    it 'should be able to check if online' do
+      user_info = FactoryGirl.build(:site_user_information)
+      user_info.online?.should be_false
+      user_info.online_icon_name.should eq 'offline'
+      user_info.update_attribute(:last_active_at, Time.new-1.minute)
+      user_info.online?.should be_true
+      user_info.online_icon_name.should eq 'online'
+      user_info.update_attribute(:last_active_at, Time.new-6.minute)
+      user_info.online?.should be_false
+      user_info.recently_online?.should be_true
+      user_info.online_icon_name.should eq 'recently_online'
+      user_info.update_attribute(:last_active_at, Time.new-16.minute)
+      user_info.online?.should be_false
+      user_info.recently_online?.should be_false
+      user_info.online_icon_name.should eq 'offline'
+    end
   end
 
 end

@@ -7,7 +7,7 @@ class ChessGamesController < InheritedResources::Base
 
   def index
     if params[:round_id]
-      @games = ChessGame.where(round_id: params[:round_id])
+      @chess_games = ChessGame.where(round_id: params[:round_id])
     else
       super
     end
