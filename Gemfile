@@ -2,7 +2,7 @@ source 'https://bb-m.rubygems.org/'
 
 #Private gem
 
-gem 'byzantion_chess', '~> 0.0.3'
+gem 'byzantion_chess', '~> 0.0.4'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

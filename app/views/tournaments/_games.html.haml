@@ -1,0 +1,13 @@
+%div.all_rounds
+  %ul#round_games
+    - @rounds.each do |round|
+      %li.one_round
+        = t('round.uppercase') + " #{round.round_number}"
+        %ul#all_games
+          - round.chess_games.each do |game|
+            %li.one_game
+              = link_to game.to_s, chess_game_path(game)
+              %span.result_game
+                = game.chess_result
+              %span.moves_game
+                = "#{game.move_count} #{t('moves')}"

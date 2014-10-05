@@ -13,12 +13,20 @@ class ChessGame < ActiveRecord::Base
 
   after_save :refresh_tournament_results
 
+  def to_s
+    white_player.to_name + ' - ' + black_player.to_name
+  end
+
   def chess_result
     RESULTS[self.result] || "?"
   end
 
   def all_moves
     chess_moves.map(&:get_move_string).flatten
+  end
+
+  def move_count
+    (chess_moves.count * 0.5).ceil
   end
 
   def all_after_move_fens

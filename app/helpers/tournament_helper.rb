@@ -9,8 +9,9 @@ module TournamentHelper
 
   def parse_and_insert_from_pgn(pgn_file)
     begin
-      pgn_content = PgnFileContent.new(pgn_file.read)
+      pgn_content = PgnFileContent.new(pgn_file.read, BYZ_LOG)
       parsed_content = pgn_content.parse_games
+      ST_LOG.info "Parsed games. Games count: #{parsed_content.size}"
       parsed_content.each do |one_game|
         raise "Should be a ByzantionChess::Game class" unless one_game.kind_of?(Game)
         header = one_game.header

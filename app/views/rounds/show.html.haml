@@ -1,0 +1,5 @@
+%div
+  = render 'list'
+  = paginate @games
+- else
+  %p= t('round.no_games')
