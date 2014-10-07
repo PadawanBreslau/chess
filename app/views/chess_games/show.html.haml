@@ -24,16 +24,29 @@
   }
 
 :javascript
-
   var reloadVariations = function(){
     //alert('Reload the variations now');
     };
-
+  var increase = function(value, limit){
+    if(value+1 < limit){
+      value++;
+    }
+    console.log(value);
+    return value;
+  };
+  var decrease  = function(value){
+    if(value-1 >= 0){
+      value--;
+    }
+    console.log(value);
+    return value;
+  };
   var cfg = {
     showNotation: false,
     position: 'start',
     onChange: reloadVariations
   };
+
 
   var chessboard = new ChessBoard('chessboard', cfg);
   var boardEl = $('#chessboard');
@@ -55,12 +68,12 @@
       boardEl.find('.square-' + move_from).addClass('highlight-white');
       boardEl.find('.square-' + move_to).addClass('highlight-white');
 
-      counter++;
+      counter = increase(counter, max_counter);
       chessboard.position(fen_before[counter], false);
     }
     else if(keyStroke == 37)
     {
-      counter--;
+      counter = decrease(counter);
       chessboard.position(fen_before[counter], false);
     }
   });
@@ -82,12 +95,12 @@
     boardEl.find('.square-' + move_from).addClass('highlight-white');
     boardEl.find('.square-' + move_to).addClass('highlight-white');
 
-    counter++;
+    counter = increase(counter, max_counter);
     chessboard.position(fen_before[counter], false);
   });
 
   $('#moveBackward').on('click', function() {
-    counter--;
+    counter = decrease(counter);
     chessboard.position(fen_before[counter], false);
   });
 
