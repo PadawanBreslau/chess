@@ -13,8 +13,8 @@
   - @chess_game.chess_moves.each_slice(2).with_index do |move_slice, i|
     %div.move_slice
     = i+1
-    - move_slice.each do |move|
-      %input.moveSelection{type: "button", value: "#{move.piece}#{move.move_notation}", fen: "#{move.fen_after}"}/
+    - move_slice.each_with_index do |move,j|
+      %input.moveSelection{type: "button", value: "#{move.piece}#{move.move_notation}", fen: "#{move.fen_after}", counter: "#{2*i+j+1}"}/
 
 :css
   .highlight-white {
@@ -106,6 +106,13 @@
 
   $('.moveSelection').each(function(index) {
     $(this).click(function() {
+      boardEl.find('.' + squareClass).removeClass('highlight-white');
+      move = $(this).attr("value");
+      move_from = move.substring(0,2);
+      move_to = move.substring(3,5);
+      boardEl.find('.square-' + move_from).addClass('highlight-white');
+      boardEl.find('.square-' + move_to).addClass('highlight-white');
+      counter = $(this).attr("counter");
       chessboard.position($(this).attr("fen"), false);
     });
   });
