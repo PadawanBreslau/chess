@@ -4,17 +4,17 @@
   = @chess_game.black_player.to_name
   = @chess_game.chess_result
 %div.chessboard{id: "chessboard", style: "width: 400px; margin-top: 50px"}
-%div.move_manipulation
-  %input#startPosition{type: "button", value: "Start"}/
+  %div.move_manipulation
+    %input#startPosition{type: "button", value: "Start"}/
   %input#moveBackward{type: "button", value: "<-"}/
   %input#moveForward{type: "button", value: "->"}/
   %input#flipBoard{type: "button", value: "Flip"}/
 %div.move_notation
   - @chess_game.chess_moves.each_slice(2).with_index do |move_slice, i|
     %div.move_slice
-    = i+1
+      = i+1
     - move_slice.each_with_index do |move,j|
-      %input.moveSelection{type: "button", value: "#{move.piece}#{move.move_notation}", fen: "#{move.fen_after}", counter: "#{2*i+j+1}"}/
+      %input.moveSelection{type: "button", notation: "#{move.move_notation}", value: "#{move.piece}#{move.move_notation}", fen: "#{move.fen_after}", counter: "#{2*i+j+1}"}/
 
 :css
   .highlight-white {
@@ -27,20 +27,59 @@
   var reloadVariations = function(){
     //alert('Reload the variations now');
     };
-  var increase = function(value, limit){
+  var increase = function(value, limit, is_castle){
     if(value+1 < limit){
       value++;
     }
-    console.log(value);
+    if(is_castle){
+     castles++;
+    }
     return value;
   };
   var decrease  = function(value){
     if(value-1 >= 0){
       value--;
     }
-    console.log(value);
+    if(is_castle){
+      castles--;
+    }
     return value;
   };
+  var castle = function(move1, move2){
+    move_from_1 = move1.substring(0,2);
+    move_to_1 = move1.substring(3,5);
+    move_from_2 = move2.substring(0,2);
+    move_to_2 = move2.substring(3,5);
+    if(move_from_1=='e1' && move_to_1=='g1' && move_from_2=="h1" && move_to_2=='f1'){
+      return true;}
+    else if(move_from_1=='e8' && move_to_1=='g8' && move_from_2=="h8" && move_to_2=='f8'){
+      return true;}
+    else if(move_from_1=='e1' && move_to_1=='g1' && move_from_2=="a1" && move_to_2=='d1'){
+      return true;}
+    else if(move_from_1=='e8' && move_to_1=='g8' && move_from_2=="a8" && move_to_2=='d8'){
+      return true;}
+    else{
+      return false;}
+  };
+  var move_up = function(){
+    move_from = moves[counter+castles].substring(0,2);
+    move_to = moves[counter+castles].substring(3,5);
+
+    boardEl.find('.' + squareClass).removeClass('highlight-white');
+    boardEl.find('.square-' + move_from).addClass('highlight-white');
+    boardEl.find('.square-' + move_to).addClass('highlight-white');
+
+    is_castle = castle(moves[counter], moves[counter+1]);
+    counter = increase(counter, max_counter, is_castle);
+    chessboard.position(fen_before[counter], false);
+  };
+  var move_down = function(){
+    boardEl.find('.' + squareClass).removeClass('highlight-white');
+    is_castle = castle(moves[counter-2], moves[counter-1]);
+    counter = decrease(counter, is_castle);
+    chessboard.position(fen_before[counter], false);
+  };
+
   var cfg = {
     showNotation: false,
     position: 'start',
@@ -57,24 +96,15 @@
   var move_from;
   var move_to;
   var squareClass = 'square-55d63';
+  var castles = 0;
 
   $(document).keydown (function (e) {
     var keyStroke = e.keyCode;
     if(keyStroke == 39){
-      move_from = moves[counter].substring(0,2);
-      move_to = moves[counter].substring(3,5);
-
-      boardEl.find('.' + squareClass).removeClass('highlight-white');
-      boardEl.find('.square-' + move_from).addClass('highlight-white');
-      boardEl.find('.square-' + move_to).addClass('highlight-white');
-
-      counter = increase(counter, max_counter);
-      chessboard.position(fen_before[counter], false);
+      move_up();
     }
-    else if(keyStroke == 37)
-    {
-      counter = decrease(counter);
-      chessboard.position(fen_before[counter], false);
+    else if(keyStroke == 37){
+      move_down();
     }
   });
 
@@ -88,26 +118,17 @@
   });
 
   $('#moveForward').on('click', function() {
-    move_from = moves[counter].substring(0,2);
-    move_to = moves[counter].substring(3,5);
-
-    boardEl.find('.' + squareClass).removeClass('highlight-white');
-    boardEl.find('.square-' + move_from).addClass('highlight-white');
-    boardEl.find('.square-' + move_to).addClass('highlight-white');
-
-    counter = increase(counter, max_counter);
-    chessboard.position(fen_before[counter], false);
+    move_up();
   });
 
   $('#moveBackward').on('click', function() {
-    counter = decrease(counter);
-    chessboard.position(fen_before[counter], false);
+    move_down();
   });
 
   $('.moveSelection').each(function(index) {
     $(this).click(function() {
       boardEl.find('.' + squareClass).removeClass('highlight-white');
-      move = $(this).attr("value");
+      move = $(this).attr("notation");
       move_from = move.substring(0,2);
       move_to = move.substring(3,5);
       boardEl.find('.square-' + move_from).addClass('highlight-white');
