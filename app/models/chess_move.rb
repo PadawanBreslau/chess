@@ -1,6 +1,7 @@
 class ChessMove < ActiveRecord::Base
-
-  CASTLES = ["e1-c1", "e1-g1", "e8-c8", "e1-g1"]
+  SHORT_CASTLES = ["e1-g1","e8-g8"]
+  LONG_CASTLES = ["e1-c1", "e8-c8"]
+  CASTLES = SHORT_CASTLES + LONG_CASTLES
 
   validates :move_notation, length: {is: 5}
   validates :level, numericality: true
@@ -28,4 +29,21 @@ class ChessMove < ActiveRecord::Base
     end
   end
 
+  def get_move_output
+    if is_short_castle?
+      'o-o'
+    elsif is_long_castle?
+      'o-o-o'
+    else
+      piece + move_notation
+    end
+  end
+
+  def is_short_castle?
+    SHORT_CASTLES.include?(move_notation) && piece == 'K'
+  end
+
+  def is_long_castle?
+    LONG_CASTLES.include?(move_notation) && piece == 'K'
+  end
 end

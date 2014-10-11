@@ -14,7 +14,7 @@
     %div.move_slice
       = i+1
     - move_slice.each_with_index do |move,j|
-      %input.moveSelection{type: "button", notation: "#{move.move_notation}", value: "#{move.piece}#{move.move_notation}", fen: "#{move.fen_after}", counter: "#{2*i+j+1}"}/
+      %input.moveSelection{type: "button", notation: "#{move.move_notation}", value: "#{move.get_move_output}", fen: "#{move.fen_after}", counter: "#{2*i+j+1}"}/
 
 :css
   .highlight-white {
