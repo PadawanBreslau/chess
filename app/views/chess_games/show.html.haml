@@ -13,6 +13,7 @@
     %input#flipBoard{type: "button", value: "Flip"}/
 %div.move_notation
   - moves_in_row = 6
+  - counter = 0
   = @chess_game.chess_moves.each_slice(2*moves_in_row).with_index do |five_move_slice, k|
     %div.five_move_slice
       = five_move_slice.each_slice(2).with_index do |move_slice, i|
@@ -20,8 +21,9 @@
           %div.number
             = "#{k*moves_in_row+i+1}."
           - move_slice.each_with_index do |move,j|
-            %input.moveSelection{type: "button", notation: "#{move.move_notation}", value: "#{move.get_move_output}", fen: "#{move.fen_after}", counter: "#{2*i+j+1}"}/
-
+            - counter = counter + 1
+            %input.moveSelection{type: "button", notation: "#{move.move_notation}",
+            value: "#{move.get_move_output}", fen: "#{move.fen_after}", counter: "#{counter}", id:"notation-#{counter-1}"}/
 :css
   .highlight-white {
     -webkit-box-shadow: inset 0 0 3px 3px yellow;
@@ -30,6 +32,14 @@
   }
 
 :javascript
+  var set_notation_highlight = function(){
+    $("input[id*='notation-']").removeClass('highlight-white');
+    $('#notation-' + counter).addClass('highlight-white');
+  }
+  var set_notation_highlight_decrease = function(){
+    $("input[id*='notation-']").removeClass('highlight-white');
+    $('#notation-' + (counter - 1)).addClass('highlight-white');
+  }
   var reloadVariations = function(){
     //alert('Reload the variations now');
     };
@@ -74,7 +84,7 @@
     boardEl.find('.' + squareClass).removeClass('highlight-white');
     boardEl.find('.square-' + move_from).addClass('highlight-white');
     boardEl.find('.square-' + move_to).addClass('highlight-white');
-
+    set_notation_highlight();
     is_castle = castle(moves[counter], moves[counter+1]);
     counter = increase(counter, max_counter, is_castle);
     chessboard.position(fen_before[counter], false);
@@ -83,8 +93,10 @@
     boardEl.find('.' + squareClass).removeClass('highlight-white');
     is_castle = castle(moves[counter-2], moves[counter-1]);
     counter = decrease(counter, is_castle);
+    set_notation_highlight_decrease();
     chessboard.position(fen_before[counter], false);
   };
+
 
   var cfg = {
     showNotation: false,
@@ -121,10 +133,12 @@
   $('#startPosition').on('click', function() {
     chessboard.position('start', false);
     counter = 0;
+    set_notation_highlight();
   });
 
   $('#endPosition').on('click', function() {
     counter = fen_before.length-1;
+    set_notation_highlight();
     chessboard.position(fen_before[fen_before.length-1], false);
   });
 
@@ -146,6 +160,7 @@
       boardEl.find('.square-' + move_from).addClass('highlight-white');
       boardEl.find('.square-' + move_to).addClass('highlight-white');
       counter = $(this).attr("counter");
+      set_notation_highlight();
       chessboard.position($(this).attr("fen"), false);
     });
   });
