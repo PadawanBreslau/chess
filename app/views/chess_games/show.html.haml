@@ -1,20 +1,26 @@
-%div.game_header
-  = @chess_game.white_player.to_name
-  = '-'
-  = @chess_game.black_player.to_name
-  = @chess_game.chess_result
-%div.chessboard{id: "chessboard", style: "width: 400px; margin-top: 50px"}
+%div.game_display
+  %div.game_header
+    = @chess_game.white_player.to_name
+    = '-'
+    = @chess_game.black_player.to_name
+    = @chess_game.chess_result
+  %div.chessboard{id: "chessboard", style: "width: 400px; margin-top: 50px"}
   %div.move_manipulation
     %input#startPosition{type: "button", value: "Start"}/
-  %input#moveBackward{type: "button", value: "<-"}/
-  %input#moveForward{type: "button", value: "->"}/
-  %input#flipBoard{type: "button", value: "Flip"}/
+    %input#moveBackward{type: "button", value: "<-"}/
+    %input#moveForward{type: "button", value: "->"}/
+    %input#endPosition{type: "button", value: "End"}/
+    %input#flipBoard{type: "button", value: "Flip"}/
 %div.move_notation
-  - @chess_game.chess_moves.each_slice(2).with_index do |move_slice, i|
-    %div.move_slice
-      = i+1
-    - move_slice.each_with_index do |move,j|
-      %input.moveSelection{type: "button", notation: "#{move.move_notation}", value: "#{move.get_move_output}", fen: "#{move.fen_after}", counter: "#{2*i+j+1}"}/
+  - moves_in_row = 6
+  = @chess_game.chess_moves.each_slice(2*moves_in_row).with_index do |five_move_slice, k|
+    %div.five_move_slice
+      = five_move_slice.each_slice(2).with_index do |move_slice, i|
+        %div.move
+          %div.number
+            = "#{k*moves_in_row+i+1}."
+          - move_slice.each_with_index do |move,j|
+            %input.moveSelection{type: "button", notation: "#{move.move_notation}", value: "#{move.get_move_output}", fen: "#{move.fen_after}", counter: "#{2*i+j+1}"}/
 
 :css
   .highlight-white {
@@ -117,6 +123,11 @@
     counter = 0;
   });
 
+  $('#endPosition').on('click', function() {
+    counter = fen_before.length-1;
+    chessboard.position(fen_before[fen_before.length-1], false);
+  });
+
   $('#moveForward').on('click', function() {
     move_up();
   });
@@ -124,6 +135,7 @@
   $('#moveBackward').on('click', function() {
     move_down();
   });
+
 
   $('.moveSelection').each(function(index) {
     $(this).click(function() {
