@@ -11,6 +11,8 @@
     %input#moveForward{type: "button", value: "->"}/
     %input#endPosition{type: "button", value: "End"}/
     %input#flipBoard{type: "button", value: "Flip"}/
+    %input#autoPlay{type: "button", value: "Auto"}/
+    %input#autoPlayStop{type: "button", value: "Stop Auto"}/
 %div.move_notation
   - moves_in_row = 6
   - counter = 0
@@ -130,6 +132,9 @@
   var squareClass = 'square-55d63';
   var castles = 0;
   var jump_value = 6;
+  var move_auto;
+  $('#autoPlayStop').hide();
+
 
   $(document).keydown (function (e) {
     var keyStroke = e.keyCode;
@@ -149,6 +154,18 @@
 
   $('#flipBoard').on('click', function() {
     chessboard.flip();
+  });
+
+  $('#autoPlay').on('click', function() {
+    $(this).hide();
+    $('#autoPlayStop').show();
+    move_auto = setInterval(move_up, 1000);
+  });
+
+  $('#autoPlayStop').on('click', function() {
+    $(this).hide();
+    $('#autoPlay').show();
+    clearInterval(move_auto);
   });
 
   $('#startPosition').on('click', function() {
