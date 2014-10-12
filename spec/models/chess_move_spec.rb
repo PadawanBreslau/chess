@@ -17,5 +17,18 @@ describe ChessMove do
       @move1.next_move.should eql @move2
 
     end
+
+    it 'should return game move string and notation' do
+      move1 =  FactoryGirl.create(:chess_move, move_number: 11, chess_game_id: @game.id, move_notation: 'e2-e4', piece: '')
+      move1.get_move_string.should eq 'e2-e4'
+      move1.get_move_output.should eq 'e2-e4'
+      move2 =  FactoryGirl.create(:chess_move, move_number: 11, chess_game_id: @game.id, move_notation: 'e1-g1', piece: 'K')
+      move2.get_move_string.should eq ['e1-g1', 'h1-f1']
+      move2.get_move_output.should eq 'o-o'
+      move3 =  FactoryGirl.create(:chess_move, move_number: 11, chess_game_id: @game.id, move_notation: 'e1-c1', piece: 'K')
+      move3.get_move_string.should eq ['e1-c1', 'a1-d1']
+      move3.get_move_output.should eq 'o-o-o'
+    end
+
   end
 end
