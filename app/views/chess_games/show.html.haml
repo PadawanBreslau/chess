@@ -97,6 +97,20 @@
     chessboard.position(fen_before[counter], false);
   };
 
+  var jump_down = function(jump_value){
+    var i = jump_value*2;
+    while(i--){
+      move_down();
+    }
+  }
+
+  var jump_up = function(jump_value){
+    var i = jump_value*2;
+    while(i--){
+      move_up();
+    }
+  }
+
 
   var cfg = {
     showNotation: false,
@@ -115,6 +129,7 @@
   var move_to;
   var squareClass = 'square-55d63';
   var castles = 0;
+  var jump_value = 6;
 
   $(document).keydown (function (e) {
     var keyStroke = e.keyCode;
@@ -123,6 +138,12 @@
     }
     else if(keyStroke == 37){
       move_down();
+    }
+    else if(keyStroke == 38){
+      jump_down(jump_value);
+    }
+    else if(keyStroke == 40){
+      jump_up(jump_value);
     }
   });
 
@@ -160,7 +181,8 @@
       boardEl.find('.square-' + move_from).addClass('highlight-white');
       boardEl.find('.square-' + move_to).addClass('highlight-white');
       counter = $(this).attr("counter");
-      set_notation_highlight();
+      $("input[id*='notation-']").removeClass('highlight-white');
+      $(this).addClass('highlight-white');
       chessboard.position($(this).attr("fen"), false);
     });
   });
