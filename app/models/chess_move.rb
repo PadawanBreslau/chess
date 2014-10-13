@@ -8,6 +8,10 @@ class ChessMove < ActiveRecord::Base
 
   belongs_to :chess_game
 
+  def variations
+    ["aaa", "bbb", "ccc"]
+  end
+
   def next_move
     game_moves = chess_game.chess_moves
     next_move = game_moves[game_moves.index(self)+1]

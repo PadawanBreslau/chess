@@ -1,10 +1,12 @@
 %div.game_display
   %div.game_header
-    = @chess_game.white_player.to_name
-    = '-'
-    = @chess_game.black_player.to_name
-    = @chess_game.chess_result
-  %div.chessboard{id: "chessboard", style: "width: 400px; margin-top: 50px"}
+    %div.game_players
+      = @chess_game.white_player.to_name
+      = '-'
+      = @chess_game.black_player.to_name
+      = "  (#{@chess_game.chess_result})"
+
+  %div.chessboard{id: "chessboard", style: "width: 500px; margin-top: 50px"}
   %div.move_manipulation
     %input#startPosition{type: "button", value: "Start"}/
     %input#moveBackward{type: "button", value: "<-"}/
@@ -26,6 +28,14 @@
             - counter = counter + 1
             %input.moveSelection{type: "button", notation: "#{move.move_notation}",
             value: "#{move.get_move_output}", fen: "#{move.fen_after}", counter: "#{counter}", id:"notation-#{counter-1}"}/
+  %div.variations
+    %div.engine_description
+      = "Stockfish 666"
+      %input#forceReload{type: "button", value: "Force Reload"}/
+    %div.analysis
+      - @chess_game.chess_moves.first.variations.take(3).each_with_index do |variation,i|
+        %span.variation_line{ id: "line-#{i}"}
+          = "..."
 :css
   .highlight-white {
     -webkit-box-shadow: inset 0 0 3px 3px yellow;
@@ -154,6 +164,9 @@
 
   $('#flipBoard').on('click', function() {
     chessboard.flip();
+  });
+  $('#forceReload').on('click', function() {
+    reloadVariations();
   });
 
   $('#autoPlay').on('click', function() {

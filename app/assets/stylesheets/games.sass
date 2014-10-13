@@ -7,10 +7,11 @@
     font-size: 22px
     vertical-align: top
     margin-right: 20px
+    font: Georgia
   .chessboard
     display: block-inline
     margin-left: 25px
-    margin-top: 20px
+    margin-top: 12px
   .move_manipulation
     margin-left: 25px
     margin-top: 20px
@@ -37,7 +38,6 @@
       font-size: 15px
       font-weight: bold
       padding: 8px 12px
-      margin-bottom: 20px
       text-decoration: none
       text-shadow: 4px 4px 4px #3d768a
       &:hover
@@ -63,29 +63,28 @@
   -webkit-border-radius: 5px
   border-radius: 5px
   border: 2px solid #dcdcdc
-  input
-    background-color: transparent
-    -moz-border-radius: 5px
-    -webkit-border-radius: 5px
-    border-radius: 5px
-    display: inline-block
-    cursor: pointer
-    color: #666666
-    font-family: Georgia
-    font-size: 12px
-    font-weight: bold
-    padding: 3px 9px
-    text-decoration: none
-    width: 60px
-    &:hover
-      background-color: transparent
-    &:active
-      position: relative
-      top: 1px
-
   .five_move_slice
     margin-top: 3px
     display: block
+    input
+      background-color: transparent
+      -moz-border-radius: 5px
+      -webkit-border-radius: 5px
+      border-radius: 5px
+      display: inline-block
+      cursor: pointer
+      color: #666666
+      font-family: Georgia
+      font-size: 12px
+      font-weight: bold
+      padding: 3px 9px
+      text-decoration: none
+      width: 60px
+      &:hover
+        background-color: transparent
+      &:active
+        position: relative
+        top: 1px
     .move
       margin-left: 5px
       width: 150px
@@ -96,4 +95,14 @@
         font-size: 13px
         font-family: Georgia
 
-
+  .variations
+    display: inline-block
+    margin-top: 24px
+    .engine_description
+      width: 300px
+      display: inline-block
+      font-size: 13px
+      font-family: Georgia
+    .analysis
+      .variation_line
+        display: block
