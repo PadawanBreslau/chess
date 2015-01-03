@@ -33,4 +33,5 @@
             = Player.find_by_id(game.white_player_id).to_name
             = game.chess_result
             = Player.find_by_id(game.black_player_id).to_name
+            = link_to t('view'), game
 
