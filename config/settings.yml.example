@@ -1,0 +1,2 @@
+deployment:
+  pgn_eval_server: http://localhost:10225
