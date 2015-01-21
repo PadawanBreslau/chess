@@ -61,12 +61,14 @@ module PlayerHelper
 
     def find_or_create_player_by_string(player_string)
       begin
-        surname, name = player_string.split(',')
-        players_with_surname = Player.where(surname: surname).load
+        surname, name = player_string.split(',').map(&:strip)
+        players_with_surname = Player.where(surname: surname, name: name).load
+        TOUR_LOG.info "Looking for player: #{surname}, #{name}"
         return players_with_surname.first if players_with_surname.size == 1
-        players_with_name_and_surname = players_with_surname.select{|player| player.name == name}
-        return players_with_name_and_surname.first if players_with_name_and_surname.size == 1
-        Player.create!(name: name, surname: surname)
+        #players_with_name_and_surname = players_with_surname.select{|player| player.name == name}
+        #return players_with_name_and_surname.first if players_with_name_and_surname.size == 1
+        TOUR_LOG.info "Player not found. Creating new"
+        Player.create(name: name, surname: surname)
       rescue StandardError => e
         ER_LOG.info "Problem with find_or_create player"
         ER_LOG.info e.message

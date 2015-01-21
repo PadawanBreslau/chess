@@ -30,7 +30,7 @@ class Player < ActiveRecord::Base
   def lowest_rating
     lowest = get_lowest_rating
     return '-' unless lowest
-    PlayerHelper::format_rating_output(lowesr.rating, lowest.year, lowest.month)
+    PlayerHelper::format_rating_output(lowest.rating, lowest.year, lowest.month)
   end
 
   def current_rating
@@ -55,6 +55,10 @@ class Player < ActiveRecord::Base
 
   def to_name
     "#{surname}, #{name}"
+  end
+
+  def self.find_player(name, player_list)
+    player_list[name] || Player.find_or_create_player_by_string(name)
   end
 
 private

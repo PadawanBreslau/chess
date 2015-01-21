@@ -53,8 +53,12 @@
     $('#notation-' + (counter - 1)).addClass('highlight-white');
   }
   var reloadVariations = function(){
-    //alert('Reload the variations now');
+      //alert('Reload the variations now');
+      $.ajax({
+        url: "#{PGN_EVAL_SERVER}"
+      });
     };
+
   var increase = function(value, limit, is_castle){
     if(value+1 < limit){
       value++;

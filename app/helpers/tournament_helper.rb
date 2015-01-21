@@ -7,9 +7,16 @@ module TournamentHelper
 
   RESULTS = [nil, '1-0','1/2','0-1', '*']
 
+  def map_result(result)
+    return 2 if result == '1/2-1/2'
+    RESULTS.index(result)
+  end
+
   def parse_and_insert_from_pgn(pgn_file)
+    @players = Hash.new
     begin
-      pgn_content = PgnFileContent.new(pgn_file.read, BYZ_LOG)
+      clear_file = pgn_file.read.gsub("\r", "")
+      pgn_content = PgnFileContent.new(clear_file, BYZ_LOG)
       parsed_content = pgn_content.parse_games
       ST_LOG.info "Parsed games. Games count: #{parsed_content.size}"
       parsed_content.each do |one_game|
@@ -18,14 +25,22 @@ module TournamentHelper
         ST_LOG.info "Importing game with header"
         ST_LOG.info header.inspect
         next if header["White"].nil? || header["Black"].nil? || header["Round"].nil?
-        white_player = Player.find_or_create_player_by_string(header["White"])
-        black_player = Player.find_or_create_player_by_string(header["Black"])
-        result = RESULTS.index(header["Result"])
+        #white_player = Player.find_or_create_player_by_string(header["White"])
+        #black_player = Player.find_or_create_player_by_string(header["Black"])
+        white_player = Player.find_player(header["White"], @players)
+        black_player = Player.find_player(header["Black"], @players)
+        @players[header["White"]] = white_player
+        @players[header["Black"]] = black_player
+
+        result = map_result(header["Result"])
         round = find_or_create_round(header["Round"], header["Date"])
+        ST_LOG.info "Round for a game: #{round}"
         game = ChessGame.new(white_player: white_player, black_player: black_player, white_player_id: white_player.id, black_player_id: black_player.id, result: result, round: round)
         add_moves_to_game(game, one_game.moves)
       end
-    rescue
+    rescue StandardError => e
+      ER_LOG.info e.backtrace.join("\n")
+      ER_LOG.info e.message
       ER_LOG.info "Problem with importing games from PGN file"
     end
   end
@@ -34,7 +49,8 @@ module TournamentHelper
     number = round_description.split('.').first.to_i
     matching_rounds = rounds.select{|r| r.round_number == number}
     return matching_rounds.first if matching_rounds.size == 1
-    Round.create!(tournament: self, round_number: number, date: date.to_datetime) and self.reload
+    round = Round.create!(tournament: self, round_number: number, date: date.to_datetime) and self.reload
+    return round
   end
 
   def add_moves_to_game(game, moves)

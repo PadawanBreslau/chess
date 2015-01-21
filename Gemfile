@@ -2,7 +2,7 @@ source 'https://bb-m.rubygems.org/'
 
 #Private gem
 
-gem 'byzantion_chess', '~> 0.0.4'
+gem 'byzantion_chess', '~> 0.1'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -16,6 +16,7 @@ gem 'kaminari'
 gem 'inherited_resources'
 gem 'simple_form'
 gem 'cancancan'
+gem 'pry'
 
 gem 'acts-as-taggable-on'
 gem 'magic_encoding'

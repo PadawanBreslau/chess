@@ -1,8 +1,13 @@
 require 'spec_helper'
+require 'pry'
 
 describe Tournament do
   def create_game(player1, player2, round,result)
     ChessGame.create!(white_player: player1, white_player_id: player1.id , black_player: player2, black_player_id: player2.id, round: round, result: result)
+  end
+
+  def match_player_result(result, res_arr)
+    [result.points,result.bucholtz ,result.mini_bucholtz,result.progress, result.games_count] == res_arr
   end
 
   context 'creating tournaments' do
@@ -192,12 +197,45 @@ describe Tournament do
       player3_result.bucholtz.should eq 4.5
       player3_result.games_count.should eq 3
 
-      player4_result.points.should eq 1.5
-      player4_result.progress.should eq 2.5
-      player4_result.mini_bucholtz.should eq 1.5
-      player4_result.bucholtz.should eq 4.5
-      player4_result.games_count.should eq 3
+      match_player_result(player4_result, [1.5, 4.5, 1.5, 2.5, 3]).should be true
+#      player4_result.points.should eq 1.5
+#      player4_result.progress.should eq 2.5
+#      player4_result.mini_bucholtz.should eq 1.5
+#      player4_result.bucholtz.should eq 4.5
+#      player4_result.games_count.should eq 3
 
+    end
+
+    it 'should fill all data in result - 4' do
+      @round2 = FactoryGirl.create(:round, tournament: @tournament, round_number: 2)
+      @round3 = FactoryGirl.create(:round, tournament: @tournament, round_number: 3)
+      @player3 = FactoryGirl.create(:player, fide_id: 456, name: 'Carl')
+      @player4 = FactoryGirl.create(:player, fide_id: 654, name: 'Darren')
+      @player5 = FactoryGirl.create(:player, fide_id: 754, name: 'Eugen')
+      @player6 = FactoryGirl.create(:player, fide_id: 954, name: 'Frank')
+      @tournament.reload
+      create_game(@player1, @player2, @round, 1)
+      create_game(@player3, @player4, @round, 2)
+      create_game(@player5, @player6, @round, 3)
+      create_game(@player6, @player1, @round2, 2)
+      create_game(@player4, @player5, @round2, 1)
+      create_game(@player3, @player2, @round2, 1)
+      create_game(@player1, @player4, @round3, 1)
+      create_game(@player6, @player3, @round3, 2)
+      create_game(@player2, @player5, @round3, 1)
+      player1_result = @player1.results.first
+      player2_result = @player2.results.first
+      player3_result = @player3.results.first
+      player4_result = @player4.results.first
+      player5_result = @player5.results.first
+      player6_result = @player6.results.first
+
+      match_player_result(player1_result, [2.5, 4.5, 1.5, 5, 3]).should be true
+      match_player_result(player2_result, [1, 4.5, 2, 1, 3]).should be true
+      match_player_result(player3_result, [2, 4.5, 1.5, 4, 3]).should be true
+      match_player_result(player4_result, [1.5, 4.5, 2, 3.5, 3]).should be true
+      match_player_result(player5_result, [0, 4.5, 1.5, 0, 3]).should be true
+      match_player_result(player6_result, [2, 4.5, 2, 4.5, 3]).should be true
     end
   end
 
