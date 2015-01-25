@@ -9,6 +9,7 @@ class SiteUser < ActiveRecord::Base
   has_many :articles
   has_many :blog_entries
   has_many :site_comments
+  has_many :commentaries
 
   has_many :rates, :through => :site_users_rates
   has_many :site_users_rates

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140721063943) do
+ActiveRecord::Schema.define(version: 20150125131617) do
 
   create_table "article_photos", force: true do |t|
     t.integer  "article_id"
@@ -73,6 +73,15 @@ ActiveRecord::Schema.define(version: 20140721063943) do
     t.string   "fen_before"
     t.string   "fen_after"
     t.string   "piece"
+  end
+
+  create_table "commentaries", force: true do |t|
+    t.integer  "chess_move_id", null: false
+    t.integer  "site_user_id",  null: false
+    t.string   "comment"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", force: true do |t|

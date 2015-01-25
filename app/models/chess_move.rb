@@ -7,6 +7,7 @@ class ChessMove < ActiveRecord::Base
   validates :level, numericality: true
 
   belongs_to :chess_game
+  has_many :commentaries
 
   def variations
     ["aaa", "bbb", "ccc"]

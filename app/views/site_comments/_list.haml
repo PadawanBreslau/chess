@@ -2,7 +2,7 @@
   %div.comment
     %div.comment_info
       = "#{short_updated_at(comment)} #{comment.site_user.nickname}"
-      = link_to image_tag('/images/ed.png'), edit_site_comment_path(comment) if can? :edit, comment
-      = link_to image_tag('/images/del.png'), site_comment_path(comment), method: :delete, confirm: t('delete_confirmation') if can? :delete, comment
+      = link_to image_tag('/images/ed.png'), edit_site_comment_path(comment) if can?(:edit, comment)
+      = link_to image_tag('/images/del.png'), site_comment_path(comment), method: :delete, confirm: t('delete_confirmation') if can?(:delete, comment)
     %div.comment_content
       = comment.content

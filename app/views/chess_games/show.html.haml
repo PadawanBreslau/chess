@@ -36,6 +36,9 @@
       - @chess_game.chess_moves.first.variations.take(3).each_with_index do |variation,i|
         %span.variation_line{ id: "line-#{i}"}
           = "..."
+  %div.user_comments
+    = render partial: "site_comments/form", locals: {commentable_type: "ChessGame", commentable_id: @chess_game.id} if current_user
+    = render partial: "site_comments/list", locals: {comments: @chess_game.site_comments}
 :css
   .highlight-white {
     -webkit-box-shadow: inset 0 0 3px 3px yellow;
