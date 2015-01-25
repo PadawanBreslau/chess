@@ -10,6 +10,7 @@ class ChessGame < ActiveRecord::Base
   has_one :black_player, class_name: 'Player', primary_key: :black_player_id,  foreign_key: :id
   has_many :chess_moves, dependent: :destroy
   has_many :site_comments, as: :commentable, dependent: :destroy
+  has_many :commentaries, through: :chess_moves
   belongs_to :round
   belongs_to :commentable
 

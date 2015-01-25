@@ -36,6 +36,7 @@ Chess::Application.routes.draw do
   resources :chess_games, :only => ["show","create", "new", "index", "update", "edit", "destroy"]
   resources :articles, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :site_comments, :only => ["index","show","update","create","destroy", "new", "edit"]
+  resources :commentaries, :only => ["index","show","update","create","destroy", "new", "edit"]
   resources :rates, :only => ["edit"]
   resources :results, :only => ["edit", "destroy"]
 

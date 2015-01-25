@@ -1,0 +1,8 @@
+- commentaries.each do |commentary|
+  %div.commentary
+    %div.commentary_info
+      = "#{short_updated_at(commentary)} #{commentary.site_user.nickname}"
+      = link_to image_tag('/images/ed.png'), edit_commentary_path(commentary) if can?(:edit, commentary)
+      = link_to image_tag('/images/del.png'), commentary_path(commentary), method: :delete, confirm: t('delete_confirmation') if can?(:delete, commentary)
+    %div.comment_content
+      = commentary.comment

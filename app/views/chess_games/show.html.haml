@@ -39,6 +39,9 @@
   %div.user_comments
     = render partial: "site_comments/form", locals: {commentable_type: "ChessGame", commentable_id: @chess_game.id} if current_user
     = render partial: "site_comments/list", locals: {comments: @chess_game.site_comments}
+  %div.commentary
+    = render partial: "commentaries/form", locals: {commentable_type: "ChessGame", chess_move_id: @chess_game.chess_moves.last.id} if current_user
+    = render partial: "commentaries/list", locals: {commentaries: @chess_game.commentaries}
 :css
   .highlight-white {
     -webkit-box-shadow: inset 0 0 3px 3px yellow;

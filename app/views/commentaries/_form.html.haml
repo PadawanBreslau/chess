@@ -1,0 +1,5 @@
+= simple_form_for Commentary.new, url: commentaries_path do |f|
+  =f.input :comment, :label => false, input_html: { class: 'add_comment', size: 50 }
+  =f.hidden_field :site_user_id, :value => current_user.id
+  =f.hidden_field :chess_move_id, :value => chess_move_id
+  - f.submit

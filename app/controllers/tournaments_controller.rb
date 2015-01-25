@@ -35,8 +35,6 @@ class TournamentsController < InheritedResources::Base
     redirect_to @tournament
   end
 
-
-
   def permitted_params
     params.permit(tournament: FIELDS)
   end
